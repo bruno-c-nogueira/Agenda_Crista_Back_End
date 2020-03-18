@@ -56,6 +56,7 @@ public class NoticiaController {
             Noticia topico = form.atualizar(id, noticiaRepository);
             return ResponseEntity.ok(new NoticiaDto(topico));
         }
+
         return ResponseEntity.notFound().build();
     }
 }
