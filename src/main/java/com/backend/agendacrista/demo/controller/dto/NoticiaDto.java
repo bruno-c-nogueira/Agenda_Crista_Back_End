@@ -1,16 +1,19 @@
 package com.backend.agendacrista.demo.controller.dto;
 
 import com.backend.agendacrista.demo.model.Noticia;
+import org.springframework.data.domain.Page;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class NoticiaDto {
     private Long id;
     private String titulo;
     private String descricao;
     private String imagemUrl;
+    private LocalDateTime dataCriacao;
+
 
     public Long getId() {
         return id;
@@ -18,6 +21,14 @@ public class NoticiaDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 
     public String getTitulo() {
@@ -49,13 +60,10 @@ public class NoticiaDto {
         this.titulo = noticia.getTitulo();
         this.descricao = noticia.getDescricao();
         this.imagemUrl = noticia.getImagemUrl();
+        this.dataCriacao = noticia.getDataCriacao();
     }
 
-    public static List<NoticiaDto> converter(List<Noticia> noticias){
-        List<NoticiaDto> dtoList = new ArrayList<>();
-        noticias.forEach(noticia -> {
-            dtoList.add(new NoticiaDto(noticia));
-        });
-        return  dtoList;
+    public static Page<NoticiaDto> converter(Page<Noticia> noticias){
+        return  noticias.map(NoticiaDto::new);
     }
 }

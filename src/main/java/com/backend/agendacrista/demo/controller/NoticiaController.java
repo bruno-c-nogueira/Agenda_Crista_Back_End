@@ -6,6 +6,10 @@ import com.backend.agendacrista.demo.controller.form.NoticiaForm;
 import com.backend.agendacrista.demo.model.Noticia;
 import com.backend.agendacrista.demo.repository.NoticiaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -17,15 +21,16 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/noticia")
+@RequestMapping(value = "/noticias")
 public class NoticiaController {
 
     @Autowired
     private NoticiaRepository noticiaRepository;
 
+    //Paginacao por data de criacao
     @GetMapping
-    public List<NoticiaDto> lista(){
-        List<Noticia> noticias = noticiaRepository.findAll();
+    public Page<NoticiaDto> listaPage(@PageableDefault(sort = "dataCriacao", direction = Sort.Direction.DESC)Pageable pageable){
+        Page<Noticia> noticias = noticiaRepository.findAll(pageable);
         return NoticiaDto.converter(noticias);
     }
 

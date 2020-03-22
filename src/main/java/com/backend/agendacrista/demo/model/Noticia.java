@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 @Entity
 public class Noticia {
@@ -14,6 +15,7 @@ public class Noticia {
     private String titulo;
     private String descricao;
     private String imagemUrl;
+    private LocalDateTime dataCriacao = LocalDateTime.now();
 
 
     public Noticia() {
@@ -49,6 +51,14 @@ public class Noticia {
         } else if (!id.equals(other.id))
             return false;
         return true;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 
     public Long getId() {

@@ -7,17 +7,13 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 public class AtualizacaoNoticiaForm {
-    @NotNull
-    @NotEmpty
     private String titulo;
-    @NotNull
-    @NotEmpty
     private String imagemUrl;
-    @NotNull
-    @NotEmpty
     private String descricao;
+    private LocalDateTime dataCriacao;
 
     public String getImagemUrl() {
         return imagemUrl;
@@ -35,6 +31,14 @@ public class AtualizacaoNoticiaForm {
         this.descricao = descricao;
     }
 
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
     public String getTitulo() {
         return titulo;
     }
@@ -49,6 +53,7 @@ public class AtualizacaoNoticiaForm {
         noticia.setTitulo(this.titulo);
         noticia.setDescricao(this.descricao);
         noticia.setImagemUrl(this.imagemUrl);
+        noticia.setDataCriacao(this.dataCriacao);
         return noticia;
     }
 }
