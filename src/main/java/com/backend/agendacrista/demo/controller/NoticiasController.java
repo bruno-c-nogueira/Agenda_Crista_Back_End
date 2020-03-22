@@ -22,7 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/noticias")
-public class NoticiaController {
+public class NoticiasController {
 
     @Autowired
     private NoticiaRepository noticiaRepository;
@@ -38,7 +38,7 @@ public class NoticiaController {
     public ResponseEntity<NoticiaDto>cadastrar(@RequestBody @Valid NoticiaForm noticiaForm, UriComponentsBuilder uriComponentsBuilder){
         Noticia noticia = noticiaForm.converter(noticiaRepository);
         noticiaRepository.save(noticia);
-        URI uri = uriComponentsBuilder.path("/topicos/{id}").buildAndExpand(noticia.getId()).toUri();
+        URI uri = uriComponentsBuilder.path("/noticias/{id}").buildAndExpand(noticia.getId()).toUri();
         return ResponseEntity.created(uri).body(new NoticiaDto(noticia));
     }
 
