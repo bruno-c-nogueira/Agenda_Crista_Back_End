@@ -36,7 +36,7 @@ public class NoticiasController {
 
     @PostMapping
     public ResponseEntity<NoticiaDto>cadastrar(@RequestBody @Valid NoticiaForm noticiaForm, UriComponentsBuilder uriComponentsBuilder){
-        Noticia noticia = noticiaForm.converter(noticiaRepository);
+        Noticia noticia = noticiaForm.converter();
         noticiaRepository.save(noticia);
         URI uri = uriComponentsBuilder.path("/noticias/{id}").buildAndExpand(noticia.getId()).toUri();
         return ResponseEntity.created(uri).body(new NoticiaDto(noticia));
