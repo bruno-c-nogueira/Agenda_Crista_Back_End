@@ -15,19 +15,19 @@ import java.util.List;
 
 @RestControllerAdvice
 
-public class NotciaHandle {
+public class ErroHandle {
 
     @Autowired
     private MessageSource messageSource;
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public List<ErroNoticiaDto> handle(MethodArgumentNotValidException exception){
-        List<ErroNoticiaDto> dto = new ArrayList<>();
+    public List<ErroDto> handle(MethodArgumentNotValidException exception){
+        List<ErroDto> dto = new ArrayList<>();
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
         fieldErrors.forEach(e -> {
             String mensagem = messageSource.getMessage(e, LocaleContextHolder.getLocale());
-            ErroNoticiaDto erro = new ErroNoticiaDto(e.getField(), mensagem);
+            ErroDto erro = new ErroDto(e.getField(), mensagem);
             dto.add(erro);
         });
         return dto;

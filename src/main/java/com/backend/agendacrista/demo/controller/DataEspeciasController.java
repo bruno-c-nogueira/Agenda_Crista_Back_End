@@ -15,7 +15,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "dataEspecias")
+@RequestMapping(value = "/dataEspecias")
 public class DataEspeciasController {
     @Autowired
     DataEspeciaisRepository dataEspeciaisRepository;

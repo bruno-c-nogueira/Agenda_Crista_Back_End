@@ -1,11 +1,11 @@
 package com.backend.agendacrista.demo.config;
 
-public class ErroNoticiaDto {
+public class ErroDto {
 
     private String campo;
     private String erro;
 
-    public ErroNoticiaDto(String campo, String erro) {
+    public ErroDto(String campo, String erro) {
         this.campo = campo;
         this.erro = erro;
     }
