@@ -14,8 +14,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.lang.reflect.Method;
-
 @EnableWebSecurity
 @Configuration
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
@@ -24,6 +22,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
     @Autowired
     TokenService tokenService;
+
     @Autowired
     UsuarioRepository repository;
 
