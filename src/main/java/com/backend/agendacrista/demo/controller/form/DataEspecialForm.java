@@ -12,7 +12,10 @@ public class DataEspecialForm {
     @NotNull
     private String descricaoData;
     @NotNull
+    private String tituloData;
+    @NotNull
     private String imagemData;
+
 
     public LocalDateTime getDataEspecial() {
         return dataEspecial;
@@ -20,6 +23,10 @@ public class DataEspecialForm {
 
     public String getDescricaoData() {
         return descricaoData;
+    }
+
+    public String getTituloData() {
+        return tituloData;
     }
 
     public String getImagemData() {

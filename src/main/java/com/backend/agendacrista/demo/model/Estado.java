@@ -14,6 +14,8 @@ public class Estado {
     private Pais pais;
     private String ddd;
 
+    private String imagem_estado;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -25,6 +27,14 @@ public class Estado {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public String getImagem_estado() {
+        return imagem_estado;
+    }
+
+    public void setImagem_estado(String imagem_estado) {
+        this.imagem_estado = imagem_estado;
     }
 
     public Integer getId() {

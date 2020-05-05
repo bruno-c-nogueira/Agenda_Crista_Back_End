@@ -10,11 +10,13 @@ public class EstadoDto {
     private Integer id;
     private String nome;
     private String uf;
+    private String imagem_estado;
 
     public EstadoDto(Estado estado) {
         this.id = estado.getId();
         this.nome = estado.getNome();
         this.uf = estado.getUf();
+        this.imagem_estado = estado.getImagem_estado();
     }
 
     public static List<EstadoDto> converte(List<Estado> estados) {
@@ -31,5 +33,9 @@ public class EstadoDto {
 
     public String getUf() {
         return uf;
+    }
+
+    public String getImagem_estado() {
+        return imagem_estado;
     }
 }
