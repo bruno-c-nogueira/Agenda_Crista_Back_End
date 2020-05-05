@@ -4,13 +4,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class LoginForm {
 
-    @NotNull@NotNull(message = "campo email é obrigatorio")
+    @NotEmpty @NotNull(message = "campo email é obrigatorio")
     private String email;
-    @NotNull@NotNull(message = "campo senha é obrigatorio")
+    @NotEmpty @NotNull(message = "campo senha é obrigatorio")
     private String senha;
 
 

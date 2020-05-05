@@ -3,17 +3,18 @@ package com.backend.agendacrista.demo.controller.form;
 import com.backend.agendacrista.demo.model.DataEspecial;
 import com.backend.agendacrista.demo.repository.DataEspeciaisRepository;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class DataEspecialForm {
-    @NotNull
+    @NotEmpty @NotNull
     private LocalDateTime dataEspecial;
-    @NotNull
+    @NotEmpty @NotNull
     private String descricaoData;
-    @NotNull
+    @NotEmpty @NotNull
     private String tituloData;
-    @NotNull
+    @NotEmpty @NotNull
     private String imagemData;
 
 

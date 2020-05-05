@@ -10,9 +10,13 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class AtualizacaoNoticiaForm {
+    @NotEmpty @NotNull
     private String titulo;
+    @NotEmpty @NotNull
     private String imagemUrl;
+    @NotEmpty @NotNull
     private String descricao;
+    @NotEmpty @NotNull
     private LocalDateTime dataCriacao;
 
     public String getImagemUrl() {
