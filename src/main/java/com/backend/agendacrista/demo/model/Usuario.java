@@ -1,6 +1,5 @@
 package com.backend.agendacrista.demo.model;
 
-import com.backend.agendacrista.demo.controller.form.LoginForm;
 import com.backend.agendacrista.demo.controller.form.RegisterForm;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
 public class Usuario implements UserDetails {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

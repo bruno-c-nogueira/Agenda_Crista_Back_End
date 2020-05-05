@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/register")
@@ -25,10 +26,15 @@ public class RegistrarController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<NoticiaDto> registrar(@RequestBody @Valid RegisterForm form) {
+    public ResponseEntity registrar(@RequestBody @Valid RegisterForm form) {
 
-        Usuario usuario = new Usuario(form);
-        Usuario save = repository.save(usuario);
+        Optional<Usuario> existeUsuario = repository.findByEmail(form.getEmail());
+
+        if (existeUsuario.isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email esta sendo usado.");
+        }
+
+        Usuario save = repository.save(new Usuario(form));
 
         return save != null ?
                 ResponseEntity.ok().build() :
