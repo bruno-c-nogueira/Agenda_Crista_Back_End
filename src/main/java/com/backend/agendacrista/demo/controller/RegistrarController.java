@@ -1,10 +1,6 @@
 package com.backend.agendacrista.demo.controller;
 
-import com.backend.agendacrista.demo.controller.dto.NoticiaDto;
-import com.backend.agendacrista.demo.controller.form.AtualizacaoNoticiaForm;
-import com.backend.agendacrista.demo.controller.form.LoginForm;
 import com.backend.agendacrista.demo.controller.form.RegisterForm;
-import com.backend.agendacrista.demo.model.Noticia;
 import com.backend.agendacrista.demo.model.Usuario;
 import com.backend.agendacrista.demo.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +22,7 @@ public class RegistrarController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity registrar(@RequestBody @Valid RegisterForm form) {
+    public ResponseEntity<?> registrar(@RequestBody @Valid RegisterForm form) {
 
         Optional<Usuario> existeUsuario = repository.findByEmail(form.getEmail());
 
@@ -36,8 +32,6 @@ public class RegistrarController {
 
         Usuario save = repository.save(new Usuario(form));
 
-        return save != null ?
-                ResponseEntity.ok().build() :
-                ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        return ResponseEntity.ok().build();
     }
 }
