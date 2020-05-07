@@ -25,7 +25,6 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/igrejas")
@@ -90,13 +89,14 @@ public class IgrejaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletar(@PathVariable Long id) {
+    public ResponseEntity<?> deletar(@PathVariable Long id, @RequestHeader("Authorization") String authorization) {
         Optional<Igreja> igreja = igrejaRepository.findById(id);
 
-        if (igreja.isPresent()) {
+        if (igreja.isPresent() && igreja.get().getUsuario() == getUsuarioLogado(authorization) ) {
             igrejaRepository.deleteById(id);
             return ResponseEntity.ok().build();
         }
+
         return ResponseEntity.notFound().build();
     }
 
