@@ -4,6 +4,7 @@ package com.backend.agendacrista.demo.controller;
 import com.backend.agendacrista.demo.config.security.TokenService;
 import com.backend.agendacrista.demo.controller.dto.DetalharIgrejaDto;
 import com.backend.agendacrista.demo.controller.dto.IgrejaDto;
+import com.backend.agendacrista.demo.controller.form.AtualizaIgrejaForm;
 import com.backend.agendacrista.demo.controller.form.IgrejaForm;
 import com.backend.agendacrista.demo.model.Cidade;
 import com.backend.agendacrista.demo.model.Igreja;
@@ -101,8 +102,17 @@ public class IgrejaController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> atualizar(@PathVariable Long id) {
-        throw new NotYetImplementedException();
+    @Transactional
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizaIgrejaForm atualizaIgrejaForm,
+                                       @RequestHeader("Authorization") String authorization) {
+        Optional<Igreja> igreja = igrejaRepository.findById(id);
+
+        if (igreja.isPresent() && igreja.get().getUsuario() == getUsuarioLogado(authorization)) {
+            Igreja igrejaForm = atualizaIgrejaForm.converte(id, igrejaRepository);
+            return ResponseEntity.ok(new DetalharIgrejaDto(igreja.get()));
+        }
+
+        return ResponseEntity.notFound().build();
     }
     
     @GetMapping("/cidade/{id}")
@@ -120,6 +130,7 @@ public class IgrejaController {
         String token = authorization.substring(7, authorization.length());
         Long idUsuario = tokenService.getIdUsuario(token);
         return usuarioRepository.findById(idUsuario).get();
+
     }
 
 }
