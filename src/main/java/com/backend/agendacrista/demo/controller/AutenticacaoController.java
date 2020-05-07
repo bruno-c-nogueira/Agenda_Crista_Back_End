@@ -39,8 +39,8 @@ public class AutenticacaoController {
         try {
             Authentication authentication = authManager.authenticate(dadosLogin);
             String token = tokenService.gerarToken(authentication);
-            Authentication authentications = SecurityContextHolder.getContext()
-                    .getAuthentication();
+
+
 
             Usuario userDetail = (Usuario) authentication.getPrincipal();
             userDetail.getUsername();

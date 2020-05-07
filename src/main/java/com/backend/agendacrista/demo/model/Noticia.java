@@ -2,10 +2,7 @@ package com.backend.agendacrista.demo.model;
 
 import com.backend.agendacrista.demo.controller.dto.NoticiaDto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,6 +10,7 @@ public class Noticia {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titulo;
+    @Column(length = 3000)
     private String descricao;
     private String imagemUrl;
     private LocalDateTime dataCriacao = LocalDateTime.now();
