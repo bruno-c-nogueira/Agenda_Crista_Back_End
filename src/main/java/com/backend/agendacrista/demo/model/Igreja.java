@@ -26,9 +26,6 @@ public class Igreja {
     @ManyToOne
     private Usuario usuario;
 
-    @OneToMany
-    private List<Evento> eventos;
-
     public Igreja(IgrejaForm igrejaForm, Cidade cidade, Usuario usuario) {
         this.nome = igrejaForm.getNome();
         this.descricao = igrejaForm.getDescricao();
@@ -126,11 +123,4 @@ public class Igreja {
         this.usuario = usuario;
     }
 
-    public List<Evento> getEventos() {
-        return eventos;
-    }
-
-    public void setEventos(List<Evento> eventos) {
-        this.eventos = eventos;
-    }
 }

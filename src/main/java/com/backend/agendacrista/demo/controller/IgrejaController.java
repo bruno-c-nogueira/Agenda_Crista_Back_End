@@ -18,6 +18,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -45,7 +47,7 @@ public class IgrejaController {
     private TokenService tokenService;
 
     @GetMapping
-    public Page<IgrejaDto> lista(@RequestParam(required = false) String nome, Pageable pageable) {
+    public Page<IgrejaDto> listar(@RequestParam(required = false) String nome, Pageable pageable) {
 
         Page<Igreja> igrejas;
 
@@ -70,30 +72,25 @@ public class IgrejaController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<?> cadastrar(@RequestBody @Valid IgrejaForm form,
-                                               UriComponentsBuilder uriComponentsBuilder,
-                                               @RequestHeader("Authorization") String authorization) {
+    public ResponseEntity<?> cadastrar(@RequestBody @Valid IgrejaForm form, UriComponentsBuilder uriComponentsBuilder) {
 
         Optional<Cidade> cidade = cidadeRepository.findById(form.getCidade_id().intValue());
-        Usuario usuario = getUsuarioLogado(authorization);
-        Igreja igreja;
 
         if (cidade.isPresent()) {
-            igreja = new Igreja(form, cidade.get(), usuario);
-        } else
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("id da cidade inválido");
-
-        igrejaRepository.save(igreja);
-
-        URI uri = uriComponentsBuilder.path("/igrejas/{id}").buildAndExpand(igreja.getId()).toUri();
-        return ResponseEntity.created(uri).body(new IgrejaDto(igreja));
+            Igreja igreja = new Igreja(form, cidade.get(), new Usuario(getIdUsuarioLogado()));
+            igrejaRepository.save(igreja);
+            URI uri = uriComponentsBuilder.path("/igrejas/{id}").buildAndExpand(igreja.getId()).toUri();
+            return ResponseEntity.created(uri).body(new IgrejaDto(igreja));
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("id da cidade inválido");
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletar(@PathVariable Long id, @RequestHeader("Authorization") String authorization) {
+    @Transactional
+    public ResponseEntity<?> deletar(@PathVariable Long id) {
         Optional<Igreja> igreja = igrejaRepository.findById(id);
 
-        if (igreja.isPresent() && igreja.get().getUsuario() == getUsuarioLogado(authorization) ) {
+        if (igreja.isPresent() && igreja.get().getUsuario().getId() == getIdUsuarioLogado() ) {
             igrejaRepository.deleteById(id);
             return ResponseEntity.ok().build();
         }
@@ -103,12 +100,11 @@ public class IgrejaController {
 
     @PutMapping("{id}")
     @Transactional
-    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizaIgrejaForm atualizaIgrejaForm,
-                                       @RequestHeader("Authorization") String authorization) {
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizaIgrejaForm atualizaIgrejaForm) {
         Optional<Igreja> igreja = igrejaRepository.findById(id);
 
-        if (igreja.isPresent() && igreja.get().getUsuario() == getUsuarioLogado(authorization)) {
-            Igreja igrejaForm = atualizaIgrejaForm.converte(id, igrejaRepository);
+        if (igreja.isPresent() && igreja.get().getUsuario().getId().equals(getIdUsuarioLogado())) {
+            atualizaIgrejaForm.converte(id, igrejaRepository);
             return ResponseEntity.ok(new DetalharIgrejaDto(igreja.get()));
         }
 
@@ -118,19 +114,19 @@ public class IgrejaController {
     @GetMapping("/cidade/{id}")
     public ResponseEntity<?> igrejasPorCidade(@PathVariable Integer id) {
         Optional<Cidade> cidade = cidadeRepository.findById(id);
-        if (cidade.isPresent()) {
-            Optional<List<Igreja>> igrejas = igrejaRepository.findByCidadeId(id);
-            if (igrejas.isPresent())
-                return ResponseEntity.ok(IgrejaDto.converte(igrejas.get()));
+        Optional<List<Igreja>> igrejas = igrejaRepository.findByCidadeId(id);
+
+        if (cidade.isPresent() && igrejas.isPresent()) {
+            return ResponseEntity.ok(IgrejaDto.converte(igrejas.get()));
         }
+
         return ResponseEntity.notFound().build();
     }
 
-    public Usuario getUsuarioLogado(String authorization) {
-        String token = authorization.substring(7, authorization.length());
-        Long idUsuario = tokenService.getIdUsuario(token);
-        return usuarioRepository.findById(idUsuario).get();
-
+    public static Long getIdUsuarioLogado() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario usuario = (Usuario) auth.getPrincipal();
+        return usuario.getId();
     }
 
 }
