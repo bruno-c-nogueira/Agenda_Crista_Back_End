@@ -2,7 +2,6 @@ package com.backend.agendacrista.demo.controller.dto;
 
 import com.backend.agendacrista.demo.model.Cidade;
 import com.backend.agendacrista.demo.model.Evento;
-import com.backend.agendacrista.demo.model.Igreja;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +12,7 @@ public class DetalharEventoDto {
     private String imagem_url;
     private String nomeCelebrante;
     private LocalDateTime data;
-    private Igreja igreja;
+    private IgrejaDto igreja;
     private Cidade cidade;
 
 
@@ -24,7 +23,7 @@ public class DetalharEventoDto {
         this.imagem_url = evento.getImagem_url();
         this.nomeCelebrante = evento.getNomeCelebrante();
         this.data = evento.getData();
-        this.igreja = evento.getIgreja();
+        this.igreja = new IgrejaDto(evento.getIgreja());
         this.cidade = evento.getCidade();
     }
 
@@ -52,7 +51,7 @@ public class DetalharEventoDto {
         return data;
     }
 
-    public Igreja getIgreja() {
+    public IgrejaDto getIgreja() {
         return igreja;
     }
 
