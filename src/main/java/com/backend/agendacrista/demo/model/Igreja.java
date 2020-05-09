@@ -42,6 +42,10 @@ public class Igreja {
 
     }
 
+    public Igreja(Long igreja_id) {
+        this.id = igreja_id;
+    }
+
 
     public Long getId() {
         return id;

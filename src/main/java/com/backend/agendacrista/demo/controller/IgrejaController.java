@@ -1,7 +1,5 @@
 package com.backend.agendacrista.demo.controller;
 
-
-import com.backend.agendacrista.demo.config.security.TokenService;
 import com.backend.agendacrista.demo.controller.dto.DetalharIgrejaDto;
 import com.backend.agendacrista.demo.controller.dto.IgrejaDto;
 import com.backend.agendacrista.demo.controller.form.AtualizaIgrejaForm;
@@ -11,8 +9,6 @@ import com.backend.agendacrista.demo.model.Igreja;
 import com.backend.agendacrista.demo.model.Usuario;
 import com.backend.agendacrista.demo.repository.CidadeRepository;
 import com.backend.agendacrista.demo.repository.IgrejaRepository;
-import com.backend.agendacrista.demo.repository.UsuarioRepository;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,28 +29,21 @@ import java.util.Optional;
 @RequestMapping("/igrejas")
 public class IgrejaController {
 
-
     @Autowired
     private IgrejaRepository igrejaRepository;
 
     @Autowired
     private CidadeRepository cidadeRepository;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @Autowired
-    private TokenService tokenService;
-
     @GetMapping
-    public Page<IgrejaDto> listar(@RequestParam(required = false) String nome, Pageable pageable) {
+    public Page<IgrejaDto> listar(@RequestParam(required = false) Integer cidade_id, Pageable pageable) {
 
         Page<Igreja> igrejas;
 
-        if (nome == null)
+        if (cidade_id == null)
             igrejas = igrejaRepository.findAll(pageable);
         else
-            igrejas = igrejaRepository.findByNomeIgnoreCaseContaining(nome, pageable);
+            igrejas = igrejaRepository.findByCidadeId(cidade_id, pageable);
 
         return IgrejaDto.converte(igrejas);
     }
@@ -106,18 +95,6 @@ public class IgrejaController {
         if (igreja.isPresent() && igreja.get().getUsuario().getId().equals(getIdUsuarioLogado())) {
             atualizaIgrejaForm.converte(id, igrejaRepository);
             return ResponseEntity.ok(new DetalharIgrejaDto(igreja.get()));
-        }
-
-        return ResponseEntity.notFound().build();
-    }
-    
-    @GetMapping("/cidade/{id}")
-    public ResponseEntity<?> igrejasPorCidade(@PathVariable Integer id) {
-        Optional<Cidade> cidade = cidadeRepository.findById(id);
-        Optional<List<Igreja>> igrejas = igrejaRepository.findByCidadeId(id);
-
-        if (cidade.isPresent() && igrejas.isPresent()) {
-            return ResponseEntity.ok(IgrejaDto.converte(igrejas.get()));
         }
 
         return ResponseEntity.notFound().build();
