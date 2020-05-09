@@ -34,6 +34,13 @@ public class LocalidadesController {
         return ResponseEntity.ok(EstadoDto.converte(estados));
     }
 
+    @GetMapping("/{uf}/{iniCidade}")
+    @Cacheable(value = "estados")
+    public ResponseEntity<List<?>> cidadeByLetra(@PathVariable String iniCidade,@PathVariable String uf) {
+        List<Cidade> cidadesOrdenadas = cidadeRepository.findAllByNomeIsStartingWithAndUfUfContains(iniCidade,uf);
+        return ResponseEntity.ok(CidadeDto.converte(cidadesOrdenadas));
+    }
+
     @GetMapping("/estados/{uf}")
     @Cacheable(value = "estados-cidades")
     public ResponseEntity<List<CidadeDto>> estadoCidade(@PathVariable String uf, @RequestParam(required = false, defaultValue = "a") Character inicio, @RequestParam(required = false, defaultValue = "z") Character fim) {
