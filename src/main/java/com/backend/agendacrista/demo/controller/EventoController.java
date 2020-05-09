@@ -2,9 +2,8 @@ package com.backend.agendacrista.demo.controller;
 
 import com.backend.agendacrista.demo.controller.dto.DetalharEventoDto;
 import com.backend.agendacrista.demo.controller.dto.EventoDto;
-import com.backend.agendacrista.demo.controller.dto.IgrejaDto;
+import com.backend.agendacrista.demo.controller.form.AtualizaEventoForm;
 import com.backend.agendacrista.demo.controller.form.EventoForm;
-import com.backend.agendacrista.demo.controller.form.IgrejaForm;
 import com.backend.agendacrista.demo.model.Cidade;
 import com.backend.agendacrista.demo.model.Evento;
 import com.backend.agendacrista.demo.model.Igreja;
@@ -17,8 +16,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -42,8 +39,16 @@ public class EventoController {
     IgrejaRepository igrejaRepository;
 
     @GetMapping
-    public Page<EventoDto> listar(Pageable pageable) {
-        Page<Evento> eventos = eventoRepository.findAll(pageable);
+    public Page<EventoDto> listar(@RequestParam(required = false) Long igreja_id,
+                                  @RequestParam(required = false) Integer cidade_id,
+                                  Pageable pageable) {
+        Page<Evento> eventos;
+        if (cidade_id != null)
+            eventos = eventoRepository.findByCidadeId(cidade_id, pageable);
+        else if (igreja_id != null)
+            eventos = eventoRepository.findByIgrejaId(igreja_id, pageable);
+        else
+            eventos = eventoRepository.findAll(pageable);
         return EventoDto.converte(eventos);
     }
 
@@ -90,6 +95,22 @@ public class EventoController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("id da cidade ou igreja inváidos");
 
     }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizaEventoForm form) {
+        Optional<Evento> evento = eventoRepository.findById(id);
+        if (evento.isPresent()) {
+            if (evento.get().getUsuario().getId() != IgrejaController.getIdUsuarioLogado())
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("usuário não tem permissão editar esse evento");
+            return ResponseEntity.ok(new DetalharEventoDto(form.converte(id, eventoRepository)));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+
+
+
 
 
 }

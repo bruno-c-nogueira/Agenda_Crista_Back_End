@@ -14,6 +14,13 @@ public class Cidade {
     private Estado uf;
     private Integer ibge;
 
+    public Cidade(Integer cidade_id) {
+    }
+
+    public Cidade() {
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
