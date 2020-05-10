@@ -1,5 +1,6 @@
 package com.backend.agendacrista.demo.controller.form;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.constraints.NotEmpty;
@@ -38,5 +39,9 @@ public class RegisterForm {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public UsernamePasswordAuthenticationToken converter() {
+        return new UsernamePasswordAuthenticationToken(email, senha);
     }
 }

@@ -19,13 +19,27 @@ public class TokenService {
     @Value("${forum.jwt.secret}")
     private String secret;
 
-    public String gerarToken(Authentication authentication) {
+    @Value("${forum.jwt.issuer.token_login}")
+    private String issuerTokenLogin;
+
+    @Value("${forum.jwt.issuer.token_confirm_email}")
+    private String issuerTokenConfirmEmail;
+
+    public String gerarTokenLogin(Authentication authentication) {
+        return this.gerarToken(authentication, issuerTokenLogin);
+    }
+
+    public String gerarTokenConfirmEmail(Authentication authentication) {
+        return this.gerarToken(authentication, issuerTokenConfirmEmail);
+    }
+
+    public String gerarToken(Authentication authentication, String issuer) {
         Usuario usuarioLogado = (Usuario) authentication.getPrincipal();
         Date hoje = new Date();
         Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
 
         return Jwts.builder()
-                .setIssuer("API")
+                .setIssuer(issuer)
                 .setSubject(usuarioLogado.getId().toString())
                 .setIssuedAt(hoje)
                 .setExpiration(dataExpiracao)
@@ -33,10 +47,18 @@ public class TokenService {
                 .compact();
     }
 
-    public boolean isTokenValido(String token) {
+    public boolean isTokenLoginValido(String token) {
+        return this.isTokenValido(token, issuerTokenLogin);
+    }
+
+    public boolean isTokenConfirmEmailValido(String token) {
+        return this.isTokenValido(token, issuerTokenConfirmEmail);
+    }
+
+    public boolean isTokenValido(String token, String issuer) {
         try {
             Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
-            return true;
+            return Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody().getIssuer().equals(issuer);
         } catch (Exception e) {
             return false;
         }

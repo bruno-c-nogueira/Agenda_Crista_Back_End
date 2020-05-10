@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -18,6 +19,9 @@ public class Usuario implements UserDetails {
     private String nome;
     private String email;
     private String senha;
+    private boolean ativo = true;
+    private LocalDateTime criadoEm = LocalDateTime.now();
+    private LocalDateTime verificadoEm;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Perfil> perfils = new ArrayList<>();
@@ -58,6 +62,22 @@ public class Usuario implements UserDetails {
         } else if (!id.equals(other.id))
             return false;
         return true;
+    }
+
+    public LocalDateTime getCriadoEm() {
+        return criadoEm;
+    }
+
+    public void setCriadoEm(LocalDateTime criadoEm) {
+        this.criadoEm = criadoEm;
+    }
+
+    public LocalDateTime getVerificadoEm() {
+        return verificadoEm;
+    }
+
+    public void setVerificadoEm(LocalDateTime verificadoEm) {
+        this.verificadoEm = verificadoEm;
     }
 
     public Long getId() {
@@ -123,6 +143,10 @@ public class Usuario implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 }
