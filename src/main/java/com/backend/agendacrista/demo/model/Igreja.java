@@ -3,7 +3,6 @@ package com.backend.agendacrista.demo.model;
 import com.backend.agendacrista.demo.controller.form.IgrejaForm;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Igreja {
@@ -13,33 +12,42 @@ public class Igreja {
     private Long id;
     private String nome;
     private String descricao;
-
     private String imagem_url;
-
-    @ManyToOne
-    private Cidade cidade;
-    private String rua;
-    private Integer numero;
-    private String bairro;
     private String telefone;
-
     @ManyToOne
     private Usuario usuario;
-
-    public Igreja(IgrejaForm igrejaForm, Cidade cidade, Usuario usuario) {
-        this.nome = igrejaForm.getNome();
-        this.descricao = igrejaForm.getDescricao();
-        this.imagem_url = igrejaForm.getImagem_url();
-        this.cidade = cidade;
-        this.rua = igrejaForm.getRua();
-        this.numero = igrejaForm.getNumero();
-        this.bairro = igrejaForm.getBairro();
-        this.telefone = igrejaForm.getTelefone();
-        this.usuario = usuario;
-    }
+    @OneToOne
+    private Endereco endereco;
 
     public Igreja() {
 
+    }
+
+    public Igreja(Long id, String nome, String descricao, String imagem_url, String telefone, Usuario usuario, Endereco endereco) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.imagem_url = imagem_url;
+        this.telefone = telefone;
+        this.usuario = usuario;
+        this.endereco = endereco;
+    }
+
+    public Igreja(IgrejaForm form, Usuario usuario) {
+        this.endereco = form.getEndereco();
+        this.nome = form.getNome();
+        this.descricao = form.getDescricao();
+        this.usuario = usuario;
+        this.telefone = form.getTelefone();
+        this.imagem_url = form.getImagem_url();
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     public Igreja(Long igreja_id) {
@@ -77,38 +85,6 @@ public class Igreja {
 
     public void setImagem_url(String imagem_url) {
         this.imagem_url = imagem_url;
-    }
-
-    public Cidade getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(Cidade cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getRua() {
-        return rua;
-    }
-
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
-
-    public Integer getNumero() {
-        return numero;
-    }
-
-    public void setNumero(Integer numero) {
-        this.numero = numero;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
     }
 
     public String getTelefone() {

@@ -43,7 +43,7 @@ public class IgrejaController {
         if (cidade_id == null)
             igrejas = igrejaRepository.findAll(pageable);
         else
-            igrejas = igrejaRepository.findByCidadeId(cidade_id, pageable);
+            igrejas = igrejaRepository.findByEndereco_CidadeId(cidade_id, pageable);
 
         return IgrejaDto.converte(igrejas);
     }
@@ -63,10 +63,10 @@ public class IgrejaController {
     @Transactional
     public ResponseEntity<?> cadastrar(@RequestBody @Valid IgrejaForm form, UriComponentsBuilder uriComponentsBuilder) {
 
-        Optional<Cidade> cidade = cidadeRepository.findById(form.getCidade_id().intValue());
+        Optional<Cidade> cidade = cidadeRepository.findById(form.getEndereco().getId());
 
         if (cidade.isPresent()) {
-            Igreja igreja = new Igreja(form, cidade.get(), new Usuario(getIdUsuarioLogado()));
+            Igreja igreja = new Igreja(form, new Usuario(getIdUsuarioLogado()));
             igrejaRepository.save(igreja);
             URI uri = uriComponentsBuilder.path("/igrejas/{id}").buildAndExpand(igreja.getId()).toUri();
             return ResponseEntity.created(uri).body(new IgrejaDto(igreja));

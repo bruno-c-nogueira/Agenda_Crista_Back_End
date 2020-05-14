@@ -1,5 +1,6 @@
 package com.backend.agendacrista.demo.controller.form;
 
+import com.backend.agendacrista.demo.model.Endereco;
 import com.backend.agendacrista.demo.model.Igreja;
 import com.backend.agendacrista.demo.repository.IgrejaRepository;
 
@@ -15,11 +16,7 @@ public class AtualizaIgrejaForm {
     @NotNull @NotEmpty
     private String imagem_url;
     @NotNull @NotEmpty
-    private String rua;
-    @NotNull
-    private Integer numero;
-    @NotNull @NotEmpty
-    private String bairro;
+    private Endereco endereco;
     @NotNull @NotEmpty
     private String telefone;
 
@@ -47,28 +44,12 @@ public class AtualizaIgrejaForm {
         this.imagem_url = imagem_url;
     }
 
-    public String getRua() {
-        return rua;
+    public Endereco getEndereco() {
+        return endereco;
     }
 
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
-
-    public Integer getNumero() {
-        return numero;
-    }
-
-    public void setNumero(Integer numero) {
-        this.numero = numero;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     public String getTelefone() {
@@ -84,9 +65,7 @@ public class AtualizaIgrejaForm {
         igreja.setNome(nome);
         igreja.setDescricao(descricao);
         igreja.setImagem_url(imagem_url);
-        igreja.setRua(rua);
-        igreja.setNumero(numero);
-        igreja.setBairro(bairro);
+        igreja.setEndereco(endereco);
         igreja.setTelefone(telefone);
         return igreja;
     }

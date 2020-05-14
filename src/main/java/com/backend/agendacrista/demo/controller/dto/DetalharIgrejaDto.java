@@ -16,7 +16,7 @@ public class DetalharIgrejaDto {
         this.nome = igreja.getNome();
         this.descricao = igreja.getDescricao();
         this.imagem_url = igreja.getImagem_url();
-        this.cidade = new CidadeDto(igreja.getCidade());
+        this.cidade = new CidadeDto(igreja.getEndereco().getCidade());
     }
 
     public Long getId() {

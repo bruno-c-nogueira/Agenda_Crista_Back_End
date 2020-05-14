@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface IgrejaRepository extends JpaRepository<Igreja, Long> {
     Page<Igreja> findByNomeIgnoreCaseContaining(String nome, Pageable pageable);
 
-    Page<Igreja> findByCidadeId(Integer id, Pageable pageable);
+    Page<Igreja> findByEndereco_CidadeId(Integer id, Pageable pageable);
 }

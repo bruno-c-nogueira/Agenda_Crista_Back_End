@@ -1,5 +1,6 @@
 package com.backend.agendacrista.demo.controller.dto;
 
+import com.backend.agendacrista.demo.model.Endereco;
 import com.backend.agendacrista.demo.model.Igreja;
 import org.springframework.data.domain.Page;
 
@@ -13,7 +14,7 @@ public class IgrejaDto {
     private String nome;
     private String descricao;
     private String imagem_url;
-    private String nomecidade;
+    private Endereco endereco;
 
 
     public IgrejaDto(Igreja igreja) {
@@ -21,7 +22,7 @@ public class IgrejaDto {
         this.nome = igreja.getNome();
         this.descricao = igreja.getDescricao();
         this.imagem_url = igreja.getImagem_url();
-        this.nomecidade = igreja.getCidade().getNome() + " - " + igreja.getCidade().getUf().getUf();
+        this.endereco = igreja.getEndereco();
     }
 
     public static Page<IgrejaDto> converte(Page<Igreja> igrejas) {
@@ -43,10 +44,6 @@ public class IgrejaDto {
 
     public String getImagem_url() {
         return imagem_url;
-    }
-
-    public String getNomecidade() {
-        return nomecidade;
     }
 
     public static List<IgrejaDto> converte(List<Igreja> igreja) {

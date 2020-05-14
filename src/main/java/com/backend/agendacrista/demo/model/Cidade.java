@@ -14,6 +14,7 @@ public class Cidade {
     private Estado uf;
     private Integer ibge;
 
+
     public Cidade(Integer cidade_id) {
     }
 
@@ -28,6 +29,7 @@ public class Cidade {
         Cidade cidade = (Cidade) o;
         return Objects.equals(id, cidade.id);
     }
+
 
     @Override
     public int hashCode() {

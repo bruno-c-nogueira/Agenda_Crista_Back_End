@@ -22,6 +22,8 @@ public class Usuario implements UserDetails {
     private boolean ativo = true;
     private LocalDateTime criadoEm = LocalDateTime.now();
     private LocalDateTime verificadoEm;
+    @OneToOne
+    private Endereco endereco;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Perfil> perfils = new ArrayList<>();
@@ -98,6 +100,14 @@ public class Usuario implements UserDetails {
 
     public String getEmail() {
         return email;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     public void setEmail(String email) {
