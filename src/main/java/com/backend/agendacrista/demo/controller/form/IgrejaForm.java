@@ -1,8 +1,5 @@
 package com.backend.agendacrista.demo.controller.form;
 
-
-import com.backend.agendacrista.demo.model.Endereco;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -14,8 +11,8 @@ public class IgrejaForm {
     private String descricao;
     @NotNull @NotEmpty
     private String imagem_url;
-    @NotNull @NotEmpty
-    private Endereco endereco;
+    @NotNull
+    private EnderecoForm endereco;
     @NotNull @NotEmpty
     private String telefone;
 
@@ -43,11 +40,11 @@ public class IgrejaForm {
         this.imagem_url = imagem_url;
     }
 
-    public Endereco getEndereco() {
+    public EnderecoForm getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(Endereco endereco) {
+    public void setEndereco(EnderecoForm endereco) {
         this.endereco = endereco;
     }
 

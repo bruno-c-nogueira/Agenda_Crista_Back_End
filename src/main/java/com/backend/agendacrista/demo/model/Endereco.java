@@ -1,5 +1,7 @@
 package com.backend.agendacrista.demo.model;
 
+import com.backend.agendacrista.demo.controller.form.EnderecoForm;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,10 +11,21 @@ public class Endereco {
     private String rua;
     private String numero;
     private String complemento;
+    private String bairro;
     @ManyToOne
-    private Bairro bairro;
-    @ManyToOne
-    Cidade cidade;
+    private Cidade cidade;
+
+    public Endereco() {
+
+    }
+
+    public Endereco(EnderecoForm enderecoForm, Cidade cidade) {
+        this.rua = enderecoForm.getRua();
+        this.numero = enderecoForm.getNumero();
+        this.complemento = enderecoForm.getComplemento();
+        this.bairro = enderecoForm.getBairro();
+        this.cidade = cidade;
+    }
 
     public int getId() {
         return id;
@@ -30,11 +43,11 @@ public class Endereco {
         this.id = id;
     }
 
-    public Bairro getBairro() {
+    public String getBairro() {
         return bairro;
     }
 
-    public void setBairro(Bairro bairro) {
+    public void setBairro(String bairro) {
         this.bairro = bairro;
     }
 

@@ -23,18 +23,8 @@ public class Igreja {
 
     }
 
-    public Igreja(Long id, String nome, String descricao, String imagem_url, String telefone, Usuario usuario, Endereco endereco) {
-        this.id = id;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.imagem_url = imagem_url;
-        this.telefone = telefone;
-        this.usuario = usuario;
+    public Igreja(IgrejaForm form, Usuario usuario, Endereco endereco) {
         this.endereco = endereco;
-    }
-
-    public Igreja(IgrejaForm form, Usuario usuario) {
-        this.endereco = form.getEndereco();
         this.nome = form.getNome();
         this.descricao = form.getDescricao();
         this.usuario = usuario;

@@ -1,6 +1,5 @@
 package com.backend.agendacrista.demo.controller.dto;
 
-import com.backend.agendacrista.demo.model.Cidade;
 import com.backend.agendacrista.demo.model.Igreja;
 
 public class DetalharIgrejaDto {
@@ -8,7 +7,7 @@ public class DetalharIgrejaDto {
     private String nome;
     private String descricao;
     private String imagem_url;
-    private CidadeDto cidade;
+    private EnderecoDto endereco;
 
 
     public DetalharIgrejaDto(Igreja igreja) {
@@ -16,7 +15,7 @@ public class DetalharIgrejaDto {
         this.nome = igreja.getNome();
         this.descricao = igreja.getDescricao();
         this.imagem_url = igreja.getImagem_url();
-        this.cidade = new CidadeDto(igreja.getEndereco().getCidade());
+        this.endereco = new EnderecoDto(igreja.getEndereco());
     }
 
     public Long getId() {
@@ -35,7 +34,7 @@ public class DetalharIgrejaDto {
         return imagem_url;
     }
 
-    public CidadeDto getCidade() {
-        return cidade;
+    public EnderecoDto getEndereco() {
+        return endereco;
     }
 }
