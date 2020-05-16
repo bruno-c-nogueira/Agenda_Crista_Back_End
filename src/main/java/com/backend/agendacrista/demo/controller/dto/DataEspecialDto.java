@@ -23,32 +23,16 @@ public class DataEspecialDto {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public LocalDateTime getDataEspecial() {
         return dataEspecial;
-    }
-
-    public void setDataEspecial(LocalDateTime dataEspecial) {
-        this.dataEspecial = dataEspecial;
     }
 
     public String getDescricaoData() {
         return descricaoData;
     }
 
-    public void setDescricaoData(String descricaoData) {
-        this.descricaoData = descricaoData;
-    }
-
     public String getImagemData() {
         return imagemData;
-    }
-
-    public void setImagemData(String imagemData) {
-        this.imagemData = imagemData;
     }
 
     public static List<DataEspecialDto> converter(List<DataEspecial> dataEspecia){

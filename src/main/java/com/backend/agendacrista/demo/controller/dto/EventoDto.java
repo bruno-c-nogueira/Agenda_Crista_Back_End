@@ -49,10 +49,6 @@ public class EventoDto {
         return nomeCelebrante;
     }
 
-    public void setNomeCelebrante(String nomeCelebrante) {
-        this.nomeCelebrante = nomeCelebrante;
-    }
-
     public LocalDateTime getData() {
         return data;
     }

@@ -16,7 +16,6 @@ public class IgrejaDto {
     private String imagem_url;
     private Endereco endereco;
 
-
     public IgrejaDto(Igreja igreja) {
         this.id = igreja.getId();
         this.nome = igreja.getNome();
