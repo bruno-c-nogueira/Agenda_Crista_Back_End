@@ -15,6 +15,8 @@ public class IgrejaForm {
     private EnderecoForm endereco;
     @NotNull @NotEmpty
     private String telefone;
+    @NotNull @NotEmpty
+    private String doc_imagem_url;
 
     public String getNome() {
         return nome;
@@ -54,5 +56,13 @@ public class IgrejaForm {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getDoc_imagem_url() {
+        return doc_imagem_url;
+    }
+
+    public void setDoc_imagem_url(String doc_imagem_url) {
+        this.doc_imagem_url = doc_imagem_url;
     }
 }

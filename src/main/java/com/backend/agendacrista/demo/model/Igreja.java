@@ -18,6 +18,10 @@ public class Igreja {
     private Usuario usuario;
     @OneToOne
     private Endereco endereco;
+    @Enumerated(value = EnumType.STRING)
+    private StatusIgreja statusIgreja = StatusIgreja.EM_ANALISE;
+    private String doc_imagem_url;
+
 
     public Igreja() {
 
@@ -30,6 +34,7 @@ public class Igreja {
         this.usuario = usuario;
         this.telefone = form.getTelefone();
         this.imagem_url = form.getImagem_url();
+        this.doc_imagem_url = form.getDoc_imagem_url();
     }
 
     public Endereco getEndereco() {
@@ -93,4 +98,19 @@ public class Igreja {
         this.usuario = usuario;
     }
 
+    public StatusIgreja getStatusIgreja() {
+        return statusIgreja;
+    }
+
+    public void setStatusIgreja(StatusIgreja statusIgreja) {
+        this.statusIgreja = statusIgreja;
+    }
+
+    public String getDoc_imagem_url() {
+        return doc_imagem_url;
+    }
+
+    public void setDoc_imagem_url(String doc_imagem_url) {
+        this.doc_imagem_url = doc_imagem_url;
+    }
 }

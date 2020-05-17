@@ -21,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -37,16 +38,16 @@ public class IgrejaController {
     private EnderecoRepository enderecoRepository;
 
     @GetMapping
-    public Page<IgrejaDto> listar(@RequestParam(required = false) String estado, @RequestParam(required = false) Integer cidade_id, Pageable pageable) {
+    public Page<IgrejaDto> listar(@RequestParam(required = false) String estado, @RequestParam(required = false) Integer cidadeId, Pageable pageable) {
 
         Page<Igreja> igrejas;
 
         if (estado != null)
-            igrejas = igrejaRepository.findByEnderecoCidadeUfUf(estado, pageable);
-        else if (cidade_id == null)
-            igrejas = igrejaRepository.findAll(pageable);
+            igrejas = igrejaRepository.findByEnderecoCidadeUfUfAndStatusIgreja(estado, StatusIgreja.VERIFICADO, pageable);
+        else if (cidadeId == null)
+            igrejas = igrejaRepository.findByStatusIgreja(StatusIgreja.VERIFICADO, pageable);
         else
-            igrejas = igrejaRepository.findByEndereco_CidadeId(cidade_id, pageable);
+            igrejas = igrejaRepository.findByEnderecoCidadeIdAndStatusIgreja(cidadeId, StatusIgreja.VERIFICADO, pageable);
 
         return IgrejaDto.converte(igrejas);
     }
@@ -60,6 +61,15 @@ public class IgrejaController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<?> minhasIgrejas() {
+        Optional<List<Igreja>> igrejas = igrejaRepository.findByUsuario(new Usuario(getIdUsuarioLogado()));
+        if (igrejas.isPresent()) {
+            return ResponseEntity.ok(DetalharIgrejaDto.converte(igrejas.get()));
+        }
+        return ResponseEntity.badRequest().body("Você não adimistra nenhuma igreja!");
     }
 
     @PostMapping
@@ -85,7 +95,7 @@ public class IgrejaController {
     public ResponseEntity<?> deletar(@PathVariable Long id) {
         Optional<Igreja> igreja = igrejaRepository.findById(id);
 
-        if (igreja.isPresent() && igreja.get().getUsuario().getId() == getIdUsuarioLogado() ) {
+        if (igreja.isPresent() && igreja.get().getUsuario().getId().equals(getIdUsuarioLogado()) ) {
             igrejaRepository.deleteById(id);
             return ResponseEntity.ok().build();
         }
