@@ -64,12 +64,12 @@ public class IgrejaController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<?> minhasIgrejas() {
-        Optional<List<Igreja>> igrejas = igrejaRepository.findByUsuario(new Usuario(getIdUsuarioLogado()));
-        if (igrejas.isPresent()) {
-            return ResponseEntity.ok(DetalharIgrejaDto.converte(igrejas.get()));
+    public ResponseEntity<List<DetalharIgrejaDto>> minhasIgrejas() {
+        List<Igreja> igrejas = igrejaRepository.findByUsuario(new Usuario(getIdUsuarioLogado()));
+        if (igrejas.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.badRequest().body("Você não adimistra nenhuma igreja!");
+        return ResponseEntity.ok(DetalharIgrejaDto.converte(igrejas));
     }
 
     @PostMapping
@@ -92,7 +92,7 @@ public class IgrejaController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> deletar(@PathVariable Long id) {
+    public ResponseEntity deletar(@PathVariable Long id) {
         Optional<Igreja> igreja = igrejaRepository.findById(id);
 
         if (igreja.isPresent() && igreja.get().getUsuario().getId().equals(getIdUsuarioLogado()) ) {
@@ -105,7 +105,7 @@ public class IgrejaController {
 
     @PutMapping("{id}")
     @Transactional
-    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizaIgrejaForm atualizaIgrejaForm) {
+    public ResponseEntity<DetalharIgrejaDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizaIgrejaForm atualizaIgrejaForm) {
         Optional<Igreja> igreja = igrejaRepository.findById(id);
         if (igreja.isPresent() && igreja.get().getUsuario().getId().equals(getIdUsuarioLogado())) {
             atualizaIgrejaForm.converte(id, igrejaRepository, cidadeRepository);

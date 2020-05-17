@@ -19,6 +19,6 @@ public interface IgrejaRepository extends JpaRepository<Igreja, Long> {
 
     Page<Igreja> findByStatusIgreja(StatusIgreja statusIgreja, Pageable pageable);
 
-    Optional<List<Igreja>> findByUsuario(Usuario usuario);
+    List<Igreja> findByUsuario(Usuario usuario);
 
 }
