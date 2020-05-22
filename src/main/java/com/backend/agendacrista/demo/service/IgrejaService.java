@@ -5,6 +5,7 @@ import com.backend.agendacrista.demo.error.ResourceNotFoundException;
 import com.backend.agendacrista.demo.error.UserPricipalNotAutorizedException;
 import com.backend.agendacrista.demo.model.Endereco;
 import com.backend.agendacrista.demo.model.Igreja;
+import com.backend.agendacrista.demo.model.StatusIgreja;
 import com.backend.agendacrista.demo.repository.CidadeRepository;
 import com.backend.agendacrista.demo.repository.IgrejaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,12 @@ public class IgrejaService {
     public void verificaSeUsuarioLogadoAutorIgreja(Long idIgreja) {
         if (igrejaRepository.getOne(idIgreja).getUsuario().getId() != UsusarioService.getIdUsuarioLogado())
             throw new UserPricipalNotAutorizedException("Usuário não tem permição");
+    }
+
+    public void alteraStausIgreja(Long idIgreja, StatusIgreja statusIgreja) {
+        verificaSeIdIgrejaExiste(idIgreja);
+        Igreja igreja = igrejaRepository.getOne(idIgreja);
+        igreja.setStatusIgreja(statusIgreja);
     }
 
     public Igreja atualizaIgreja(Long idIgreja, AtualizaIgrejaForm igrejaForm) {

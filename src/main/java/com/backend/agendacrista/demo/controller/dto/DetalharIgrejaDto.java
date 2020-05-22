@@ -2,6 +2,7 @@ package com.backend.agendacrista.demo.controller.dto;
 
 import com.backend.agendacrista.demo.model.Igreja;
 import com.backend.agendacrista.demo.model.StatusIgreja;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,5 +52,8 @@ public class DetalharIgrejaDto {
 
     public static List<DetalharIgrejaDto> converteIgrejaListParaIgrejaDtoList(List<Igreja> igrejas) {
         return igrejas.stream().map(DetalharIgrejaDto::new).collect(Collectors.toList());
+    }
+    public static Page<DetalharIgrejaDto> converteIgrejaPageParaDetalharIgrejaDtoPage(Page<Igreja> igrejas) {
+        return igrejas.map(DetalharIgrejaDto::new);
     }
 }

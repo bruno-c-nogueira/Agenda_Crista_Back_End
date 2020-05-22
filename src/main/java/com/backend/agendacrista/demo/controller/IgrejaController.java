@@ -39,6 +39,23 @@ public class IgrejaController {
         return IgrejaDto.converteIgrejaPageParaIgrejaDtoPage(igrejaRepository.findByStatusIgreja(StatusIgreja.VERIFICADO, pageable));
     }
 
+    @GetMapping("/admin/em-analise")
+    public Page<DetalharIgrejaDto> listarEmAnalise(Pageable pageable) {
+        return DetalharIgrejaDto.converteIgrejaPageParaDetalharIgrejaDtoPage(igrejaRepository.findByStatusIgreja(StatusIgreja.EM_ANALISE, pageable));
+    }
+    @Transactional
+    @GetMapping("/admin/confirma-igreja/{id}")
+    public ResponseEntity<?> confirmaStatusIgreja(@PathVariable Long id, Pageable pageable) {
+        igrejaService.alteraStausIgreja(id, StatusIgreja.VERIFICADO);
+        return ResponseEntity.ok().build();
+    }
+    @Transactional
+    @GetMapping("/admin/bloqueia-igreja/{id}")
+    public ResponseEntity<?> bloqueiaStatusIgreja(@PathVariable Long id, Pageable pageable) {
+        igrejaService.alteraStausIgreja(id, StatusIgreja.BLOQUEADO);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<DetalharIgrejaDto> detalhar(@PathVariable Long id) {
         igrejaService.verificaSeIdIgrejaExiste(id);
