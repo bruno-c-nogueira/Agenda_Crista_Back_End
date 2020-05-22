@@ -16,7 +16,7 @@ public class EnderecoForm {
     @NotEmpty @NotNull
     private String bairro;
     @NotNull
-    private Integer cidade_id;
+    private Long cidade_id;
 
     public String getRua() {
         return rua;
@@ -50,11 +50,11 @@ public class EnderecoForm {
         this.bairro = bairro;
     }
 
-    public Integer getCidade_id() {
+    public Long getCidade_id() {
         return cidade_id;
     }
 
-    public void setCidade_id(Integer cidade_id) {
+    public void setCidade_id(Long cidade_id) {
         this.cidade_id = cidade_id;
     }
 

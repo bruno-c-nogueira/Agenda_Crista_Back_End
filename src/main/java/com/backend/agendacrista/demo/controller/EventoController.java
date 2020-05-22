@@ -11,6 +11,7 @@ import com.backend.agendacrista.demo.model.Usuario;
 import com.backend.agendacrista.demo.repository.CidadeRepository;
 import com.backend.agendacrista.demo.repository.EventoRepository;
 import com.backend.agendacrista.demo.repository.IgrejaRepository;
+import com.backend.agendacrista.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -67,7 +68,7 @@ public class EventoController {
     public ResponseEntity<DetalharEventoDto> deletar(@PathVariable Long id) {
 
         Optional<Evento> evento = eventoRepository.findById(id);
-        if (evento.isPresent() && IgrejaController.getIdUsuarioLogado() == evento.get().getUsuario().getId()) {
+        if (evento.isPresent() && UserService.getIdUsuarioLogado() == evento.get().getUsuario().getId()) {
             eventoRepository.deleteById(id);
             return ResponseEntity.ok().build();
         }
@@ -84,10 +85,10 @@ public class EventoController {
 
         if (cidade.isPresent() && igreja.isPresent()) {
 
-            if (igreja.get().getUsuario().getId() != IgrejaController.getIdUsuarioLogado())
+            if (igreja.get().getUsuario().getId() != UserService.getIdUsuarioLogado())
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("usuário não tem permissão de criar evento para essa igreja");
 
-            Evento evento = new Evento(form, cidade.get(), igreja.get(), new Usuario(IgrejaController.getIdUsuarioLogado()));
+            Evento evento = new Evento(form, cidade.get(), igreja.get(), new Usuario(UserService.getIdUsuarioLogado()));
             eventoRepository.save(evento);
             URI uri = uriComponentsBuilder.path("/eventos/{id}").buildAndExpand(evento.getId()).toUri();
             return ResponseEntity.created(uri).body(new EventoDto(evento));
@@ -101,7 +102,7 @@ public class EventoController {
     public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizaEventoForm form) {
         Optional<Evento> evento = eventoRepository.findById(id);
         if (evento.isPresent()) {
-            if (evento.get().getUsuario().getId() != IgrejaController.getIdUsuarioLogado())
+            if (evento.get().getUsuario().getId() != UserService.getIdUsuarioLogado())
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("usuário não tem permissão editar esse evento");
             return ResponseEntity.ok(new DetalharEventoDto(form.converte(id, eventoRepository)));
         }

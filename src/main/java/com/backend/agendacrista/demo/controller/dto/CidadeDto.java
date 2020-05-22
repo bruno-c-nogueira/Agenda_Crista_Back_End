@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CidadeDto {
-    private Integer id;
+    private Long id;
     private String nome;
 
     public CidadeDto(Cidade cidade) {
@@ -18,7 +18,7 @@ public class CidadeDto {
         return cidades.stream().map(CidadeDto::new).collect(Collectors.toList());
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 

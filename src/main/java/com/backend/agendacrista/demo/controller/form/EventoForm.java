@@ -16,7 +16,7 @@ public class EventoForm {
     @NotNull @NotEmpty
     private String nomeCelebrante;
     @NotNull
-    private Integer cidade_id;
+    private Long cidade_id;
     @NotNull
     private LocalDateTime data;
 
@@ -63,11 +63,11 @@ public class EventoForm {
         this.igreja_id = igreja_id;
     }
 
-    public Integer getCidade_id() {
+    public Long getCidade_id() {
         return cidade_id;
     }
 
-    public void setCidade_id(Integer cidade_id) {
+    public void setCidade_id(Long cidade_id) {
         this.cidade_id = cidade_id;
     }
 

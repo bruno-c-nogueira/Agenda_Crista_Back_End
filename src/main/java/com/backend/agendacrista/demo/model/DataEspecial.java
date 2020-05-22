@@ -2,22 +2,16 @@ package com.backend.agendacrista.demo.model;
 
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-import javax.persistence.GenerationType;
 import java.time.LocalDateTime;
 
 @Entity
-public class DataEspecial {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class DataEspecial extends AbstractEntity {
+
     private LocalDateTime dataEspecial;
     private String descricaoData;
     private String imagemData;
 
-    public DataEspecial(LocalDateTime dataEspecial,String descricaoData,String imagemData) {
+    public DataEspecial(LocalDateTime dataEspecial, String descricaoData, String imagemData) {
         super();
         this.dataEspecial = dataEspecial;
         this.descricaoData = descricaoData;
@@ -33,14 +27,6 @@ public class DataEspecial {
 
     public void setImagemData(String imagemData) {
         this.imagemData = imagemData;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public LocalDateTime getDataEspecial() {

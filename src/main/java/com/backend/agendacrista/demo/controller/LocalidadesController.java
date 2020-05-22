@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -43,21 +42,12 @@ public class LocalidadesController {
 
     @GetMapping("/estados/{uf}")
     @Cacheable(value = "estados-cidades")
-    public ResponseEntity<List<CidadeDto>> estadoCidade(@PathVariable String uf, @RequestParam(required = false, defaultValue = "a") Character inicio, @RequestParam(required = false, defaultValue = "z") Character fim) {
+    public ResponseEntity<List<CidadeDto>> estadoCidade(@PathVariable String uf) {
         List<Cidade> cidades = cidadeRepository.findByUfUf(uf);
         if (cidades.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-
-        List<Cidade> cidadeFiltrado = new ArrayList<>();
-        cidades.forEach(cidade -> {
-            Character inicial =  cidade.getNome().toLowerCase().charAt(0);
-            if (inicial >= Character.toLowerCase(inicio) && inicial <= Character.toLowerCase(fim)) {
-                cidadeFiltrado.add(cidade);
-            }
-        });
-
-        return ResponseEntity.ok(CidadeDto.converte(cidadeFiltrado));
+        return ResponseEntity.ok(CidadeDto.converte(cidades));
     }
 
 

@@ -1,47 +1,19 @@
 package com.backend.agendacrista.demo.model;
 
 
-import javax.persistence.*;
-import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Cidade {
+public class Cidade extends AbstractEntity {
 
-    @Id
-    private Integer id;
     private String nome;
     @ManyToOne
     private Estado uf;
     private Integer ibge;
 
 
-    public Cidade(Integer cidade_id) {
-    }
-
     public Cidade() {
-
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cidade cidade = (Cidade) o;
-        return Objects.equals(id, cidade.id);
-    }
-
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getNome() {

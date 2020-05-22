@@ -9,18 +9,14 @@ public class EventoDto {
     private Long id;
     private String nome;
     private String descricao;
-    private String imagem_url;
     private String nomeCelebrante;
-    private LocalDateTime data;
 
 
     public EventoDto(Evento evento) {
         this.id = evento.getId();
         this.nome = evento.getNome();
         this.descricao = evento.getDescricao();
-        this.imagem_url = evento.getImagem_url();
         this.nomeCelebrante = evento.getNomeCelebrante();
-        this.data = evento.getData();
     }
 
 
@@ -41,16 +37,9 @@ public class EventoDto {
         return descricao;
     }
 
-    public String getImagem_url() {
-        return imagem_url;
-    }
-
     public String getNomeCelebrante() {
         return nomeCelebrante;
     }
 
-    public LocalDateTime getData() {
-        return data;
-    }
 
 }

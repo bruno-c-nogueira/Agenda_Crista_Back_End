@@ -8,7 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EventoRepository extends JpaRepository<Evento, Long> {
 
-    Page<Evento> findByCidadeId(Integer id, Pageable pageable);
-
     Page<Evento> findByIgrejaId(Long id, Pageable pageable);
+
+    Page<Evento> findByCidadeId(Integer cidade_id, Pageable pageable);
 }
+

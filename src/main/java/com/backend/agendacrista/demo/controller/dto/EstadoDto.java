@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class EstadoDto {
 
-    private Integer id;
+    private Long id;
     private String nome;
     private String uf;
     private String imagem_estado;
@@ -23,7 +23,7 @@ public class EstadoDto {
         return estados.stream().map(EstadoDto::new).collect(Collectors.toList());
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 

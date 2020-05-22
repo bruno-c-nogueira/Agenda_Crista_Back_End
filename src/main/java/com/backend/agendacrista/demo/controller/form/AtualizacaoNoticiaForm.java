@@ -3,7 +3,6 @@ package com.backend.agendacrista.demo.controller.form;
 
 import com.backend.agendacrista.demo.model.Noticia;
 import com.backend.agendacrista.demo.repository.NoticiaRepository;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

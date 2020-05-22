@@ -5,11 +5,7 @@ import com.backend.agendacrista.demo.controller.form.IgrejaForm;
 import javax.persistence.*;
 
 @Entity
-public class Igreja {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Igreja extends AbstractEntity {
     private String nome;
     private String descricao;
     private String imagem_url;
@@ -46,16 +42,7 @@ public class Igreja {
     }
 
     public Igreja(Long igreja_id) {
-        this.id = igreja_id;
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.setId(igreja_id);
     }
 
     public String getNome() {

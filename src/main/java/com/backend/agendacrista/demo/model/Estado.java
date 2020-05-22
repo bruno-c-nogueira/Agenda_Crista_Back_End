@@ -1,12 +1,10 @@
 package com.backend.agendacrista.demo.model;
 
-import javax.persistence.*;
-import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Estado {
-    @Id
-    private Integer id;
+public class Estado extends AbstractEntity {
     private String nome;
     private String uf;
     private Integer ibge;
@@ -16,33 +14,12 @@ public class Estado {
 
     private String imagem_estado;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Estado estado = (Estado) o;
-        return Objects.equals(id, estado.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
     public String getImagem_estado() {
         return imagem_estado;
     }
 
     public void setImagem_estado(String imagem_estado) {
         this.imagem_estado = imagem_estado;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getNome() {

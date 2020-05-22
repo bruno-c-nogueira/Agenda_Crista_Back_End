@@ -2,12 +2,11 @@ package com.backend.agendacrista.demo.model;
 
 import com.backend.agendacrista.demo.controller.form.EnderecoForm;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Endereco {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Endereco extends AbstractEntity {
     private String rua;
     private String numero;
     private String complemento;
@@ -27,9 +26,6 @@ public class Endereco {
         this.cidade = cidade;
     }
 
-    public int getId() {
-        return id;
-    }
 
     public Cidade getCidade() {
         return cidade;
@@ -37,10 +33,6 @@ public class Endereco {
 
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getBairro() {

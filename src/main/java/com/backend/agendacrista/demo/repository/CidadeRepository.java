@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface CidadeRepository extends JpaRepository<Cidade, Integer> {
+public interface CidadeRepository extends JpaRepository<Cidade, Long> {
     List<Cidade> findByUfId(Integer id);
     List<Cidade> findByUfUf(String uf);
     @Query()
