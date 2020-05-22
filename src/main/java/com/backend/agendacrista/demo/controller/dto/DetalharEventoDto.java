@@ -10,7 +10,6 @@ public class DetalharEventoDto {
     private Long id;
     private String nome;
     private String descricao;
-    private String imagem_url;
     private String nomeCelebrante;
     private IgrejaDto igreja;
     private LocalDate dataInicial;
@@ -22,7 +21,6 @@ public class DetalharEventoDto {
         this.id = evento.getId();
         this.nome = evento.getNome();
         this.descricao = evento.getDescricao();
-        this.imagem_url = evento.getImagem_url();
         this.nomeCelebrante = evento.getNomeCelebrante();
         this.igreja = new IgrejaDto(evento.getIgreja());
         this.dataInicial = evento.getDataInicial();
@@ -40,10 +38,6 @@ public class DetalharEventoDto {
 
     public String getDescricao() {
         return descricao;
-    }
-
-    public String getImagem_url() {
-        return imagem_url;
     }
 
     public String getNomeCelebrante() {

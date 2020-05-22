@@ -10,7 +10,6 @@ import java.util.List;
 public class Evento extends AbstractEntity {
     private String nome;
     private String descricao;
-    private String imagem_url;
     @ManyToOne
     private Igreja igreja;
     private String nomeCelebrante;
@@ -25,7 +24,6 @@ public class Evento extends AbstractEntity {
     public Evento(EventoForm form, Igreja igreja, Usuario usuario, List<Horarios> horarios) {
         this.nome = form.getNome();
         this.descricao = form.getDescricao();
-        this.imagem_url = form.getImagem_url();
         this.igreja = igreja;
         this.nomeCelebrante = form.getNomeCelebrante();
         this.dataInicial = form.getDataInicial();
@@ -60,14 +58,6 @@ public class Evento extends AbstractEntity {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public String getImagem_url() {
-        return imagem_url;
-    }
-
-    public void setImagem_url(String imagem_url) {
-        this.imagem_url = imagem_url;
     }
 
     public Igreja getIgreja() {

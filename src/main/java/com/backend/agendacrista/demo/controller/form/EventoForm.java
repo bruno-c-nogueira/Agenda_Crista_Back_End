@@ -23,8 +23,6 @@ public class EventoForm {
     @NotEmpty
     private String nomeCelebrante;
     @NotNull
-    @NotEmpty
-    private String imagem_url;
     @NotNull
     private LocalDate dataInicial;
     @NotNull
@@ -48,15 +46,6 @@ public class EventoForm {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
-    public String getImagem_url() {
-        return imagem_url;
-    }
-
-    public void setImagem_url(String imagem_url) {
-        this.imagem_url = imagem_url;
-    }
-
 
     public String getNomeCelebrante() {
         return nomeCelebrante;
