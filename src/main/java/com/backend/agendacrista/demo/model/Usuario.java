@@ -22,9 +22,6 @@ public class Usuario extends AbstractEntity implements UserDetails {
     @OneToOne
     private Endereco endereco;
 
-    @Enumerated(value = EnumType.STRING)
-    private TipoUsuario tipoUsuario = TipoUsuario.USUARIO;
-
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Perfil> perfils = new ArrayList<>();
 

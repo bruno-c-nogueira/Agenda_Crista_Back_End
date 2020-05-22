@@ -48,7 +48,7 @@ public class NoticiaDto {
         this.dataCriacao = noticia.getDataCriacao();
     }
 
-    public static Page<NoticiaDto> converter(Page<Noticia> noticias){
+    public static Page<NoticiaDto> converteNoticiaPageParaNoticiaDtoPage(Page<Noticia> noticias){
         return  noticias.map(NoticiaDto::new);
     }
 }

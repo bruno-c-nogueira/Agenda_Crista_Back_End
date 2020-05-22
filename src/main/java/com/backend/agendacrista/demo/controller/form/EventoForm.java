@@ -1,25 +1,36 @@
 package com.backend.agendacrista.demo.controller.form;
 
+import com.backend.agendacrista.demo.model.*;
+import com.backend.agendacrista.demo.service.UserService;
+
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class EventoForm {
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String nome;
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String descricao;
-    @NotNull @NotEmpty
-    private String imagem_url;
     @NotNull
     private Long igreja_id;
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String nomeCelebrante;
     @NotNull
-    private Long cidade_id;
+    @NotEmpty
+    private String imagem_url;
     @NotNull
-    private LocalDateTime data;
-
+    private LocalDate dataInicial;
+    @NotNull
+    private LocalDate dataFinal;
+    @NotNull
+    private List<@Valid HorariosForm> horarios;
 
 
     public String getNome() {
@@ -63,19 +74,38 @@ public class EventoForm {
         this.igreja_id = igreja_id;
     }
 
-    public Long getCidade_id() {
-        return cidade_id;
+    public LocalDate getDataInicial() {
+        return dataInicial;
     }
 
-    public void setCidade_id(Long cidade_id) {
-        this.cidade_id = cidade_id;
+    public void setDataInicial(LocalDate dataInicial) {
+        this.dataInicial = dataInicial;
     }
 
-    public LocalDateTime getData() {
-        return data;
+    public LocalDate getDataFinal() {
+        return dataFinal;
     }
 
-    public void setData(LocalDateTime data) {
-        this.data = data;
+    public void setDataFinal(LocalDate dataFinal) {
+        this.dataFinal = dataFinal;
+    }
+
+    public List<HorariosForm> getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(List<HorariosForm> horarios) {
+        this.horarios = horarios;
+    }
+
+    public Evento converteEventoFormParaEvento() {
+        List<Horarios> horariosList = this.horarios.stream().map(Horarios::new).collect(Collectors.toList());
+        return new Evento(this, new Igreja(this.getIgreja_id()), new Usuario(UserService.getIdUsuarioLogado()),horariosList);
+    }
+
+    public Evento converteEventoFormParaEventoESetId(Long id) {
+        Evento evento = this.converteEventoFormParaEvento();
+        evento.setId(id);
+        return evento;
     }
 }

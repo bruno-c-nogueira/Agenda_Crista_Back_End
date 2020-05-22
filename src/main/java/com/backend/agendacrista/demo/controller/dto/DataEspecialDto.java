@@ -35,7 +35,7 @@ public class DataEspecialDto {
         return imagemData;
     }
 
-    public static List<DataEspecialDto> converter(List<DataEspecial> dataEspecia){
+    public static List<DataEspecialDto> converteDataEspecialListParaDataEspecialDtoList(List<DataEspecial> dataEspecia){
         List<DataEspecialDto> list = new ArrayList<>();
         dataEspecia.forEach(dataEspecialfor -> {
             list.add(new DataEspecialDto(dataEspecialfor));

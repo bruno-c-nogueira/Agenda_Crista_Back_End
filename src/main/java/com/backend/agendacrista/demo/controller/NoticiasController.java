@@ -17,7 +17,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -29,14 +28,14 @@ public class NoticiasController {
 
     //Paginacao por data de criacao
     @GetMapping
-    public Page<NoticiaDto> listaPage(@PageableDefault(sort = "dataCriacao", direction = Sort.Direction.DESC)Pageable pageable){
+    public Page<NoticiaDto> listaPage(@PageableDefault(sort = "dataCriacao", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<Noticia> noticias = noticiaRepository.findAll(pageable);
-        return NoticiaDto.converter(noticias);
+        return NoticiaDto.converteNoticiaPageParaNoticiaDtoPage(noticias);
     }
 
     @PostMapping
-    public ResponseEntity<NoticiaDto>cadastrar(@RequestBody @Valid NoticiaForm noticiaForm, UriComponentsBuilder uriComponentsBuilder){
-        Noticia noticia = noticiaForm.converter();
+    public ResponseEntity<NoticiaDto> cadastrar(@RequestBody @Valid NoticiaForm noticiaForm, UriComponentsBuilder uriComponentsBuilder) {
+        Noticia noticia = noticiaForm.converteNoticiaFormParaNoticia();
         noticiaRepository.save(noticia);
         URI uri = uriComponentsBuilder.path("/noticias/{id}").buildAndExpand(noticia.getId()).toUri();
         return ResponseEntity.created(uri).body(new NoticiaDto(noticia));

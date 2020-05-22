@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface CidadeRepository extends JpaRepository<Cidade, Long> {
-    List<Cidade> findByUfId(Integer id);
     List<Cidade> findByUfUf(String uf);
+
     @Query()
-    List<Cidade> findAllByNomeIsStartingWithAndUfUfContains(String inical,String uf);
+    List<Cidade> findAllByNomeIsStartingWithAndUfUfContains(String inical, String uf);
 }

@@ -8,6 +8,14 @@ import javax.persistence.Entity;
 public class Perfil extends AbstractEntity implements GrantedAuthority {
     private String nome;
 
+    public Perfil() {
+    }
+
+    public Perfil(Long id,String nome) {
+        this.setId(id);
+        this.nome = nome;
+    }
+
     public String getNome() {
         return nome;
     }

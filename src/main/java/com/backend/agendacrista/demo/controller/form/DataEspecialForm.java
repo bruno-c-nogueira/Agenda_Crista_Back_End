@@ -34,7 +34,7 @@ public class DataEspecialForm {
         return imagemData;
     }
 
-    public DataEspecial converter(){
+    public DataEspecial converteDataEspecialFormParaDataEspecial(){
         return new DataEspecial(dataEspecial,descricaoData,imagemData);
     }
 }

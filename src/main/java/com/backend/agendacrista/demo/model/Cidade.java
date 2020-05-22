@@ -16,6 +16,10 @@ public class Cidade extends AbstractEntity {
     public Cidade() {
     }
 
+    public Cidade(Long id) {
+        this.setId(id);
+    }
+
     public String getNome() {
         return nome;
     }

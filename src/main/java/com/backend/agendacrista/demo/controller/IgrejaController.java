@@ -9,8 +9,8 @@ import com.backend.agendacrista.demo.model.Igreja;
 import com.backend.agendacrista.demo.model.StatusIgreja;
 import com.backend.agendacrista.demo.model.Usuario;
 import com.backend.agendacrista.demo.repository.CidadeRepository;
-import com.backend.agendacrista.demo.repository.EnderecoRepository;
 import com.backend.agendacrista.demo.repository.IgrejaRepository;
+import com.backend.agendacrista.demo.service.LocalidadesService;
 import com.backend.agendacrista.demo.service.IgrejaService;
 import com.backend.agendacrista.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,19 +30,16 @@ public class IgrejaController {
 
     @Autowired
     private IgrejaRepository igrejaRepository;
-
     @Autowired
     private IgrejaService igrejaService;
-
     @Autowired
     private CidadeRepository cidadeRepository;
-
     @Autowired
-    private EnderecoRepository enderecoRepository;
+    private LocalidadesService localidadesService;
 
     @GetMapping
     public Page<IgrejaDto> listar(Pageable pageable) {
-        return IgrejaDto.converte(igrejaRepository.findByStatusIgreja(StatusIgreja.VERIFICADO, pageable));
+        return IgrejaDto.converteIgrejaPageParaIgrejaDtoPage(igrejaRepository.findByStatusIgreja(StatusIgreja.VERIFICADO, pageable));
     }
 
     @GetMapping("/{id}")
@@ -54,8 +51,9 @@ public class IgrejaController {
     @PostMapping
     @Transactional
     public ResponseEntity<?> cadastrar(@RequestBody @Valid IgrejaForm form, UriComponentsBuilder uriComponentsBuilder) {
-        igrejaService.verificaSeIdCidadeExiste(form.getEndereco().getCidade_id());
-        Igreja igreja = form.converte(igrejaRepository, enderecoRepository, cidadeRepository, UserService.getIdUsuarioLogado());
+        localidadesService.verificaSeIdCidadeExiste(form.getEndereco().getCidade_id());
+        Igreja igreja = form.converteIgrejaFormParaIgreja();
+        igreja = igrejaRepository.save(igreja);
         return ResponseEntity.created(uriComponentsBuilder.path("/igrejas/{id}").buildAndExpand(igreja.getId()).toUri()).body(new IgrejaDto(igreja));
     }
 
@@ -73,7 +71,7 @@ public class IgrejaController {
     public ResponseEntity<DetalharIgrejaDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizaIgrejaForm atualizaIgrejaForm) {
         igrejaService.verificaSeIdIgrejaExiste(id);
         igrejaService.verificaSeUsuarioLogadoAutorIgreja(id);
-        return ResponseEntity.ok(new DetalharIgrejaDto(atualizaIgrejaForm.converte(id, igrejaRepository, cidadeRepository)));
+        return ResponseEntity.ok(new DetalharIgrejaDto(atualizaIgrejaForm.atualizaIgrejaFormParaIgreja(id, igrejaRepository, cidadeRepository)));
     }
 
     @GetMapping("/user")
@@ -82,7 +80,7 @@ public class IgrejaController {
         if (igrejas.isEmpty()) {
             throw new ResourceNotFoundException("Usuario não tem igrejas");
         }
-        return ResponseEntity.ok(DetalharIgrejaDto.converte(igrejas));
+        return ResponseEntity.ok(DetalharIgrejaDto.converteIgrejaListParaIgrejaDtoList(igrejas));
     }
 
 }

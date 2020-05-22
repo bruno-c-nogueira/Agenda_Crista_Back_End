@@ -1,11 +1,10 @@
 package com.backend.agendacrista.demo.controller.form;
 
+import com.backend.agendacrista.demo.model.Cidade;
 import com.backend.agendacrista.demo.model.Endereco;
 import com.backend.agendacrista.demo.model.Igreja;
 import com.backend.agendacrista.demo.model.Usuario;
-import com.backend.agendacrista.demo.repository.CidadeRepository;
-import com.backend.agendacrista.demo.repository.EnderecoRepository;
-import com.backend.agendacrista.demo.repository.IgrejaRepository;
+import com.backend.agendacrista.demo.service.UserService;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -73,10 +72,9 @@ public class IgrejaForm {
         this.doc_imagem_url = doc_imagem_url;
     }
 
-    public Igreja converte(IgrejaRepository igrejaRepository, EnderecoRepository enderecoRepository, CidadeRepository cidadeRepository, Long idUsuarioLogado) {
-        Endereco endereco = new Endereco(this.getEndereco(), cidadeRepository.getOne(this.getEndereco().getCidade_id()));
-        Igreja igreja = new Igreja(this, new Usuario(idUsuarioLogado), endereco);
-        enderecoRepository.save(endereco);
-        return igrejaRepository.save(igreja);
+    public Igreja converteIgrejaFormParaIgreja() {
+        Endereco endereco = new Endereco(this.getEndereco(), new Cidade(this.getEndereco().getCidade_id()));
+        Igreja igreja = new Igreja(this, new Usuario(UserService.getIdUsuarioLogado()), endereco);
+        return igreja;
     }
 }

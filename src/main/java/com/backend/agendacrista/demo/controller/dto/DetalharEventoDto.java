@@ -1,9 +1,10 @@
 package com.backend.agendacrista.demo.controller.dto;
 
-import com.backend.agendacrista.demo.model.Cidade;
 import com.backend.agendacrista.demo.model.Evento;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class DetalharEventoDto {
     private Long id;
@@ -11,9 +12,10 @@ public class DetalharEventoDto {
     private String descricao;
     private String imagem_url;
     private String nomeCelebrante;
-    private LocalDateTime data;
     private IgrejaDto igreja;
-    private Cidade cidade;
+    private LocalDate dataInicial;
+    private LocalDate dataFinal;
+    private List<HorariosDto> horarios;
 
 
     public DetalharEventoDto(Evento evento) {
@@ -22,9 +24,10 @@ public class DetalharEventoDto {
         this.descricao = evento.getDescricao();
         this.imagem_url = evento.getImagem_url();
         this.nomeCelebrante = evento.getNomeCelebrante();
-        this.data = evento.getData();
         this.igreja = new IgrejaDto(evento.getIgreja());
-        this.cidade = evento.getCidade();
+        this.dataInicial = evento.getDataInicial();
+        this.dataFinal = evento.getDataFinal();
+        this.horarios = evento.getHorarios().stream().map(HorariosDto::new).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -47,15 +50,19 @@ public class DetalharEventoDto {
         return nomeCelebrante;
     }
 
-    public LocalDateTime getData() {
-        return data;
-    }
-
     public IgrejaDto getIgreja() {
         return igreja;
     }
 
-    public Cidade getCidade() {
-        return cidade;
+    public LocalDate getDataInicial() {
+        return dataInicial;
+    }
+
+    public LocalDate getDataFinal() {
+        return dataFinal;
+    }
+
+    public List<HorariosDto> getHorarios() {
+        return horarios;
     }
 }

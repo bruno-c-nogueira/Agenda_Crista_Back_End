@@ -26,7 +26,7 @@ public class NoticiaForm {
         return imagemUrl;
     }
 
-    public Noticia converter(){
+    public Noticia converteNoticiaFormParaNoticia(){
         return new Noticia(titulo,descricao,imagemUrl);
     }
 }

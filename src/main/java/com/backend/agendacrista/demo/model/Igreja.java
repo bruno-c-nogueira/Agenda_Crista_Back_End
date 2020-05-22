@@ -12,7 +12,7 @@ public class Igreja extends AbstractEntity {
     private String telefone;
     @ManyToOne
     private Usuario usuario;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private Endereco endereco;
     @Enumerated(value = EnumType.STRING)
     private StatusIgreja statusIgreja = StatusIgreja.EM_ANALISE;

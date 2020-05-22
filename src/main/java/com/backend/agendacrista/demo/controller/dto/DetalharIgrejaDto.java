@@ -49,7 +49,7 @@ public class DetalharIgrejaDto {
         return statusIgreja;
     }
 
-    public static List<DetalharIgrejaDto> converte(List<Igreja> igrejas) {
+    public static List<DetalharIgrejaDto> converteIgrejaListParaIgrejaDtoList(List<Igreja> igrejas) {
         return igrejas.stream().map(DetalharIgrejaDto::new).collect(Collectors.toList());
     }
 }

@@ -3,46 +3,35 @@ package com.backend.agendacrista.demo.model;
 import com.backend.agendacrista.demo.controller.form.EventoForm;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-public class Evento {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Evento extends AbstractEntity {
     private String nome;
     private String descricao;
-
     private String imagem_url;
-
     @ManyToOne
     private Igreja igreja;
-
     private String nomeCelebrante;
-
-    @ManyToOne
-    private Cidade cidade;
-
-    private LocalDateTime data;
-
+    private LocalDate dataInicial;
+    private LocalDate dataFinal;
+    @ManyToMany(cascade = {CascadeType.ALL})
+    private List<Horarios> horarios;
     @ManyToOne
     private Usuario usuario;
 
-    @ManyToMany
-    private List<Usuario> adms;
 
-    public Evento(EventoForm form, Cidade cidade, Igreja igreja, Usuario usuario) {
+    public Evento(EventoForm form, Igreja igreja, Usuario usuario, List<Horarios> horarios) {
         this.nome = form.getNome();
         this.descricao = form.getDescricao();
         this.imagem_url = form.getImagem_url();
         this.igreja = igreja;
         this.nomeCelebrante = form.getNomeCelebrante();
-        this.cidade = cidade;
-        this.data = form.getData();
+        this.dataInicial = form.getDataInicial();
+        this.dataFinal = form.getDataFinal();
+        this.horarios = horarios;
         this.usuario = usuario;
-
     }
 
     public Evento() {
@@ -55,14 +44,6 @@ public class Evento {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNome() {
@@ -105,27 +86,27 @@ public class Evento {
         this.nomeCelebrante = nomeCelebrante;
     }
 
-    public Cidade getCidade() {
-        return cidade;
+    public LocalDate getDataInicial() {
+        return dataInicial;
     }
 
-    public void setCidade(Cidade cidade) {
-        this.cidade = cidade;
+    public void setDataInicial(LocalDate dataInicial) {
+        this.dataInicial = dataInicial;
     }
 
-    public LocalDateTime getData() {
-        return data;
+    public LocalDate getDataFinal() {
+        return dataFinal;
     }
 
-    public void setData(LocalDateTime data) {
-        this.data = data;
+    public void setDataFinal(LocalDate dataFinal) {
+        this.dataFinal = dataFinal;
     }
 
-    public List<Usuario> getAdms() {
-        return adms;
+    public List<Horarios> getHorarios() {
+        return horarios;
     }
 
-    public void setAdms(List<Usuario> adms) {
-        this.adms = adms;
+    public void setHorarios(List<Horarios> horarios) {
+        this.horarios = horarios;
     }
 }

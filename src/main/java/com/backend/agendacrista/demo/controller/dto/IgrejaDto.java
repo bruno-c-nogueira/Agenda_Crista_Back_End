@@ -24,7 +24,7 @@ public class IgrejaDto {
         this.endereco = igreja.getEndereco();
     }
 
-    public static Page<IgrejaDto> converte(Page<Igreja> igrejas) {
+    public static Page<IgrejaDto> converteIgrejaPageParaIgrejaDtoPage(Page<Igreja> igrejas) {
 
         return igrejas.map(IgrejaDto::new);
     }
@@ -45,7 +45,4 @@ public class IgrejaDto {
         return imagem_url;
     }
 
-    public static List<IgrejaDto> converte(List<Igreja> igreja) {
-        return igreja.stream().map(IgrejaDto::new).collect(Collectors.toList());
-    }
 }

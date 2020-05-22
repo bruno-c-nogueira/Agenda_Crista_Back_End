@@ -10,6 +10,5 @@ public interface EventoRepository extends JpaRepository<Evento, Long> {
 
     Page<Evento> findByIgrejaId(Long id, Pageable pageable);
 
-    Page<Evento> findByCidadeId(Integer cidade_id, Pageable pageable);
 }
 

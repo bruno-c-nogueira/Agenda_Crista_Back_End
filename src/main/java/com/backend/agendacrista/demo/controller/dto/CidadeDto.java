@@ -14,7 +14,7 @@ public class CidadeDto {
         this.nome = cidade.getNome();
     }
 
-    public static List<CidadeDto> converte(List<Cidade> cidades) {
+    public static List<CidadeDto> converteCidadeListParaCidadeDtoList(List<Cidade> cidades) {
         return cidades.stream().map(CidadeDto::new).collect(Collectors.toList());
     }
 

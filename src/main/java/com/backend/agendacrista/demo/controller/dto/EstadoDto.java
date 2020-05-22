@@ -19,7 +19,7 @@ public class EstadoDto {
         this.imagem_estado = estado.getImagem_estado();
     }
 
-    public static List<EstadoDto> converte(List<Estado> estados) {
+    public static List<EstadoDto> converteEstadoListParaEstadoDtoList(List<Estado> estados) {
         return estados.stream().map(EstadoDto::new).collect(Collectors.toList());
     }
 

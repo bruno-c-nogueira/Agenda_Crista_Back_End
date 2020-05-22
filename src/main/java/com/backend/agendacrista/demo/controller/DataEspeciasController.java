@@ -1,7 +1,6 @@
 package com.backend.agendacrista.demo.controller;
 
 import com.backend.agendacrista.demo.controller.dto.DataEspecialDto;
-import com.backend.agendacrista.demo.controller.dto.NoticiaDto;
 import com.backend.agendacrista.demo.controller.form.DataEspecialForm;
 import com.backend.agendacrista.demo.model.DataEspecial;
 import com.backend.agendacrista.demo.repository.DataEspeciaisRepository;
@@ -22,7 +21,7 @@ public class DataEspeciasController {
 
     @PostMapping
     ResponseEntity<DataEspecialDto> cadastraDatas(@RequestBody @Validated DataEspecialForm dataEspecialDto, UriComponentsBuilder uriComponentsBuilder){
-        DataEspecial dataEspecial = dataEspecialDto.converter();
+        DataEspecial dataEspecial = dataEspecialDto.converteDataEspecialFormParaDataEspecial();
         dataEspeciaisRepository.save(dataEspecial);
         URI uri = uriComponentsBuilder.path("/dataEspecias/{id}").buildAndExpand(dataEspecial.getId()).toUri();
         return ResponseEntity.created(uri).body(new DataEspecialDto(dataEspecial));
@@ -32,7 +31,7 @@ public class DataEspeciasController {
     List<DataEspecialDto>list(){
         List<DataEspecial> dataEspecials = dataEspeciaisRepository.findAll();
 
-        return DataEspecialDto.converter(dataEspecials);
+        return DataEspecialDto.converteDataEspecialListParaDataEspecialDtoList(dataEspecials);
     }
 
 }

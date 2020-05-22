@@ -20,7 +20,7 @@ public class EventoDto {
     }
 
 
-    public static Page<EventoDto> converte(Page<Evento> eventos) {
+    public static Page<EventoDto> converteEventoPageParaEventoDtoPage(Page<Evento> eventos) {
         return eventos.map(EventoDto::new);
     }
 

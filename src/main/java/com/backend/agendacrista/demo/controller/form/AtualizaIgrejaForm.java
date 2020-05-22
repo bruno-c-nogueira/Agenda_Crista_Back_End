@@ -62,7 +62,7 @@ public class AtualizaIgrejaForm {
         this.telefone = telefone;
     }
 
-    public Igreja converte(Long id, IgrejaRepository igrejaRepository, CidadeRepository cidadeRepository) {
+    public Igreja atualizaIgrejaFormParaIgreja(Long id, IgrejaRepository igrejaRepository, CidadeRepository cidadeRepository) {
         Igreja igreja = igrejaRepository.getOne(id);
         igreja.setNome(nome);
         igreja.setDescricao(descricao);
