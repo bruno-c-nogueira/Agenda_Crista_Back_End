@@ -41,7 +41,7 @@ public class RegisterForm {
         this.senha = senha;
     }
 
-    public UsernamePasswordAuthenticationToken converter() {
+    public UsernamePasswordAuthenticationToken converteRegisterFormParaUsernamePasswordToken() {
         return new UsernamePasswordAuthenticationToken(email, senha);
     }
 }
