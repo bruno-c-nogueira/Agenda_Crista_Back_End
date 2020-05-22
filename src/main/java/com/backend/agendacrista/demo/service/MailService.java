@@ -11,14 +11,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MailService {
-
-    private JavaMailSender javaMailSender;
-
     @Autowired
-    public MailService(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
-    }
-
+    JavaMailSender javaMailSender;
 
     @Async
     public void sendEmail(Usuario user, String assunto, String corpo) throws MailException {

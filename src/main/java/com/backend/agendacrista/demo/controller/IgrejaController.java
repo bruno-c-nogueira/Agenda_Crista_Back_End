@@ -8,11 +8,10 @@ import com.backend.agendacrista.demo.error.ResourceNotFoundException;
 import com.backend.agendacrista.demo.model.Igreja;
 import com.backend.agendacrista.demo.model.StatusIgreja;
 import com.backend.agendacrista.demo.model.Usuario;
-import com.backend.agendacrista.demo.repository.CidadeRepository;
 import com.backend.agendacrista.demo.repository.IgrejaRepository;
-import com.backend.agendacrista.demo.service.LocalidadesService;
 import com.backend.agendacrista.demo.service.IgrejaService;
-import com.backend.agendacrista.demo.service.UserService;
+import com.backend.agendacrista.demo.service.LocalidadesService;
+import com.backend.agendacrista.demo.service.UsusarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,8 +31,6 @@ public class IgrejaController {
     private IgrejaRepository igrejaRepository;
     @Autowired
     private IgrejaService igrejaService;
-    @Autowired
-    private CidadeRepository cidadeRepository;
     @Autowired
     private LocalidadesService localidadesService;
 
@@ -71,12 +68,12 @@ public class IgrejaController {
     public ResponseEntity<DetalharIgrejaDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizaIgrejaForm atualizaIgrejaForm) {
         igrejaService.verificaSeIdIgrejaExiste(id);
         igrejaService.verificaSeUsuarioLogadoAutorIgreja(id);
-        return ResponseEntity.ok(new DetalharIgrejaDto(atualizaIgrejaForm.atualizaIgrejaFormParaIgreja(id, igrejaRepository, cidadeRepository)));
+        return ResponseEntity.ok(new DetalharIgrejaDto(igrejaService.atualizaIgreja(id, atualizaIgrejaForm)));
     }
 
     @GetMapping("/user")
     public ResponseEntity<List<DetalharIgrejaDto>> igrejasPorUsuarioLogado() {
-        List<Igreja> igrejas = igrejaRepository.findByUsuario(new Usuario(UserService.getIdUsuarioLogado()));
+        List<Igreja> igrejas = igrejaRepository.findByUsuario(new Usuario(UsusarioService.getIdUsuarioLogado()));
         if (igrejas.isEmpty()) {
             throw new ResourceNotFoundException("Usuario não tem igrejas");
         }

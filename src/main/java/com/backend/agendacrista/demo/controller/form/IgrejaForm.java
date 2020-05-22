@@ -4,7 +4,7 @@ import com.backend.agendacrista.demo.model.Cidade;
 import com.backend.agendacrista.demo.model.Endereco;
 import com.backend.agendacrista.demo.model.Igreja;
 import com.backend.agendacrista.demo.model.Usuario;
-import com.backend.agendacrista.demo.service.UserService;
+import com.backend.agendacrista.demo.service.UsusarioService;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -74,7 +74,7 @@ public class IgrejaForm {
 
     public Igreja converteIgrejaFormParaIgreja() {
         Endereco endereco = new Endereco(this.getEndereco(), new Cidade(this.getEndereco().getCidade_id()));
-        Igreja igreja = new Igreja(this, new Usuario(UserService.getIdUsuarioLogado()), endereco);
+        Igreja igreja = new Igreja(this, new Usuario(UsusarioService.getIdUsuarioLogado()), endereco);
         return igreja;
     }
 }

@@ -1,7 +1,7 @@
 package com.backend.agendacrista.demo.controller.form;
 
 import com.backend.agendacrista.demo.model.*;
-import com.backend.agendacrista.demo.service.UserService;
+import com.backend.agendacrista.demo.service.UsusarioService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -100,7 +100,7 @@ public class EventoForm {
 
     public Evento converteEventoFormParaEvento() {
         List<Horarios> horariosList = this.horarios.stream().map(Horarios::new).collect(Collectors.toList());
-        return new Evento(this, new Igreja(this.getIgreja_id()), new Usuario(UserService.getIdUsuarioLogado()),horariosList);
+        return new Evento(this, new Igreja(this.getIgreja_id()), new Usuario(UsusarioService.getIdUsuarioLogado()),horariosList);
     }
 
     public Evento converteEventoFormParaEventoESetId(Long id) {

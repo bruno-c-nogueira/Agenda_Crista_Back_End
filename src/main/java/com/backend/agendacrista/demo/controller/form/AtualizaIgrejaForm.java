@@ -61,20 +61,4 @@ public class AtualizaIgrejaForm {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-
-    public Igreja atualizaIgrejaFormParaIgreja(Long id, IgrejaRepository igrejaRepository, CidadeRepository cidadeRepository) {
-        Igreja igreja = igrejaRepository.getOne(id);
-        igreja.setNome(nome);
-        igreja.setDescricao(descricao);
-        igreja.setImagem_url(imagem_url);
-        igreja.setTelefone(telefone);
-        Endereco endereco = igreja.getEndereco();
-        endereco.setRua(this.endereco.getRua());
-        endereco.setNumero(this.endereco.getNumero());
-        endereco.setBairro(this.endereco.getBairro());
-        endereco.setComplemento(this.endereco.getComplemento());
-        Cidade cidade = cidadeRepository.getOne(this.endereco.getCidade_id());
-        endereco.setCidade(cidade);
-        return igreja;
-    }
 }
