@@ -8,6 +8,9 @@ import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,6 +37,43 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
         return new ResponseEntity<>(rnfDetails, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<?> handleBadCredentialsException(BadCredentialsException bcExeption) {
+        ErrorDetails bcDetails = ErrorDetails.Builder.newBuilder()
+                .timestamp(new Date().getTime())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .title("Falha ao efetuar autenticação")
+                .detail("Email ou senhas inválidos")
+                .developerMessage(bcExeption.getClass().getName())
+                .build();
+        return new ResponseEntity<>(bcDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DisabledException.class)
+    public ResponseEntity<?> handleDisabledException(DisabledException dExeption) {
+        ErrorDetails dDetails = ErrorDetails.Builder.newBuilder()
+                .timestamp(new Date().getTime())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .title("Falha ao efetuar autenticação")
+                .detail("Confirmação de email pendente, faça novamente o registro")
+                .developerMessage(dExeption.getClass().getName())
+                .build();
+        return new ResponseEntity<>(dDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<?> handleAuthenticationException(AuthenticationException aExeption) {
+        ErrorDetails aDetails = ErrorDetails.Builder.newBuilder()
+                .timestamp(new Date().getTime())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .title("Falha ao efetuar autenticação")
+                .detail(aExeption.getMessage())
+                .developerMessage(aExeption.getClass().getName())
+                .build();
+        return new ResponseEntity<>(aDetails, HttpStatus.BAD_REQUEST);
+    }
+
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException manvExeption, HttpHeaders headers, HttpStatus status, WebRequest request) {

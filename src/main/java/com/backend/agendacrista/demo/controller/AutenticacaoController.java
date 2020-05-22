@@ -8,11 +8,8 @@ import com.backend.agendacrista.demo.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,26 +28,11 @@ public class AutenticacaoController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<Object> autenticar(@RequestBody @Valid LoginForm form){
+    public ResponseEntity<Object> autenticar(@RequestBody @Valid LoginForm form) {
         UsernamePasswordAuthenticationToken dadosLogin = form.converter();
-        try {
-            Authentication authentication = authManager.authenticate(dadosLogin);
-            String token = tokenService.gerarTokenLogin(authentication);
-
-            Usuario userDetail = (Usuario) authentication.getPrincipal();
-
-            return ResponseEntity.ok(new TokenDto(token, "Bearer",new UsuarioDto(userDetail)));
-
-        } catch (BadCredentialsException e) {
-            return ResponseEntity.badRequest().body("Email ou senhas inválidos");
-
-        } catch (DisabledException e) {
-            return ResponseEntity.badRequest()
-                    .body("Confirmação de email não efetuada, faça novamente o registro!");
-
-        } catch (AuthenticationException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        Authentication authentication = authManager.authenticate(dadosLogin);
+        String token = tokenService.gerarTokenLogin(authentication);
+        Usuario userDetail = (Usuario) authentication.getPrincipal();
+        return ResponseEntity.ok(new TokenDto(token, "Bearer", new UsuarioDto(userDetail)));
     }
-
 }
