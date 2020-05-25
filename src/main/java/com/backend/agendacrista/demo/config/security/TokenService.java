@@ -19,11 +19,8 @@ public class TokenService {
     @Value("${forum.jwt.secret}")
     private String secret;
 
-    @Value("${forum.jwt.issuer.token_login}")
-    private String issuerTokenLogin;
-
-    @Value("${forum.jwt.issuer.token_confirm_email}")
-    private String issuerTokenConfirmEmail;
+    private final String issuerTokenLogin = "login";
+    private final String issuerTokenConfirmEmail = "email";
 
     public String gerarTokenLogin(Authentication authentication) {
         return this.gerarToken(authentication, issuerTokenLogin);
