@@ -11,6 +11,7 @@ public class DetalharIgrejaDto {
     private Long id;
     private String nome;
     private String descricao;
+    private String telefone;
     private String imagem_url;
     private StatusIgreja statusIgreja;
     private EnderecoDto endereco;
@@ -20,10 +21,10 @@ public class DetalharIgrejaDto {
         this.id = igreja.getId();
         this.nome = igreja.getNome();
         this.descricao = igreja.getDescricao();
+        this.telefone = igreja.getTelefone();
         this.imagem_url = igreja.getImagem_url();
         this.statusIgreja = igreja.getStatusIgreja();
         this.endereco = new EnderecoDto(igreja.getEndereco());
-
     }
 
     public Long getId() {
@@ -48,6 +49,10 @@ public class DetalharIgrejaDto {
 
     public StatusIgreja getStatusIgreja() {
         return statusIgreja;
+    }
+
+    public String getTelefone() {
+        return telefone;
     }
 
     public static List<DetalharIgrejaDto> converteIgrejaListParaIgrejaDtoList(List<Igreja> igrejas) {
