@@ -1,5 +1,6 @@
 package com.backend.agendacrista.demo.repository;
 
+import com.backend.agendacrista.demo.model.DiaDaSemana;
 import com.backend.agendacrista.demo.model.Evento;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +15,10 @@ public interface EventoRepository extends JpaRepository<Evento, Long> {
     Page<Evento> findByIgrejaId(Long id, Pageable pageable);
 
     List<Evento> findByDataFinalGreaterThanEqualAndIgrejaId(LocalDate endDate, Long id);
+
+    List<Evento> findByDataFinalGreaterThanEqualAndIgrejaIdAndHorariosDiaDaSemana(LocalDate endDate, Long id, DiaDaSemana diaDaSemana);
+
+    List<Evento> findByHorariosDiaDaSemana(DiaDaSemana diasDaSemana);
 
 }
 

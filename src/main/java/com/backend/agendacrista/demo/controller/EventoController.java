@@ -3,6 +3,7 @@ package com.backend.agendacrista.demo.controller;
 import com.backend.agendacrista.demo.controller.dto.DetalharEventoDto;
 import com.backend.agendacrista.demo.controller.dto.EventoDto;
 import com.backend.agendacrista.demo.controller.form.EventoForm;
+import com.backend.agendacrista.demo.model.DiaDaSemana;
 import com.backend.agendacrista.demo.model.Evento;
 import com.backend.agendacrista.demo.repository.EventoRepository;
 import com.backend.agendacrista.demo.service.EventoService;
@@ -36,8 +37,14 @@ public class EventoController {
     }
 
     @GetMapping("/ativo/igreja/{igrejaId}")
-    public ResponseEntity<List<DetalharEventoDto>> listarEv(@PathVariable Long igrejaId) {
+    public ResponseEntity<List<DetalharEventoDto>> listarEventoAtivoPorIgreja(@PathVariable Long igrejaId) {
         List<Evento> listEvento = eventoRepository.findByDataFinalGreaterThanEqualAndIgrejaId(LocalDate.now(), igrejaId);
+        return ResponseEntity.ok(DetalharEventoDto.converteEventoListParaDetalharEventoDto(listEvento));
+    }
+
+    @GetMapping("/ativo/igreja/{igrejaId}/dia-semana/{diaDaSemana}")
+    public ResponseEntity<List<DetalharEventoDto>> listarEventoAtivoPorIgrejaEDiaDaSemana(@PathVariable Long igrejaId, @PathVariable DiaDaSemana diaDaSemana) {
+        List<Evento> listEvento = eventoRepository.findByDataFinalGreaterThanEqualAndIgrejaIdAndHorariosDiaDaSemana(LocalDate.now(), igrejaId, diaDaSemana);
         return ResponseEntity.ok(DetalharEventoDto.converteEventoListParaDetalharEventoDto(listEvento));
     }
 
