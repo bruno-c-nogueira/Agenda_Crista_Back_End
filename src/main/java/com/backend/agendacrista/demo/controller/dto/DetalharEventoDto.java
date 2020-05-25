@@ -8,10 +8,9 @@ import java.util.stream.Collectors;
 
 public class DetalharEventoDto {
     private Long id;
-    private String nome;
+    private String titulo;
     private String descricao;
     private String nomeCelebrante;
-    private IgrejaDto igreja;
     private LocalDate dataInicial;
     private LocalDate dataFinal;
     private List<HorariosDto> horarios;
@@ -19,10 +18,9 @@ public class DetalharEventoDto {
 
     public DetalharEventoDto(Evento evento) {
         this.id = evento.getId();
-        this.nome = evento.getNome();
+        this.titulo = evento.getTitulo();
         this.descricao = evento.getDescricao();
         this.nomeCelebrante = evento.getNomeCelebrante();
-        this.igreja = new IgrejaDto(evento.getIgreja());
         this.dataInicial = evento.getDataInicial();
         this.dataFinal = evento.getDataFinal();
         this.horarios = evento.getHorarios().stream().map(HorariosDto::new).collect(Collectors.toList());
@@ -32,8 +30,8 @@ public class DetalharEventoDto {
         return id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getTitulo() {
+        return titulo;
     }
 
     public String getDescricao() {
@@ -42,10 +40,6 @@ public class DetalharEventoDto {
 
     public String getNomeCelebrante() {
         return nomeCelebrante;
-    }
-
-    public IgrejaDto getIgreja() {
-        return igreja;
     }
 
     public LocalDate getDataInicial() {

@@ -3,18 +3,16 @@ package com.backend.agendacrista.demo.controller.dto;
 import com.backend.agendacrista.demo.model.Evento;
 import org.springframework.data.domain.Page;
 
-import java.time.LocalDateTime;
-
 public class EventoDto {
     private Long id;
-    private String nome;
+    private String titulo;
     private String descricao;
     private String nomeCelebrante;
 
 
     public EventoDto(Evento evento) {
         this.id = evento.getId();
-        this.nome = evento.getNome();
+        this.titulo = evento.getTitulo();
         this.descricao = evento.getDescricao();
         this.nomeCelebrante = evento.getNomeCelebrante();
     }
@@ -29,8 +27,8 @@ public class EventoDto {
     }
 
 
-    public String getNome() {
-        return nome;
+    public String getTitulo() {
+        return titulo;
     }
 
     public String getDescricao() {

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class EventoForm {
     @NotNull
     @NotEmpty
-    private String nome;
+    private String titulo;
     @NotNull
     @NotEmpty
     private String descricao;
@@ -31,12 +31,12 @@ public class EventoForm {
     private List<@Valid HorariosForm> horarios;
 
 
-    public String getNome() {
-        return nome;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getDescricao() {
