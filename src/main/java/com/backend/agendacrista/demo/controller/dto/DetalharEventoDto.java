@@ -59,4 +59,8 @@ public class DetalharEventoDto {
     public List<HorariosDto> getHorarios() {
         return horarios;
     }
+
+    public static List<DetalharEventoDto> converteEventoListParaDetalharEventoDto(List<Evento> eventoList) {
+        return eventoList.stream().map(DetalharEventoDto::new).collect(Collectors.toList());
+    }
 }
