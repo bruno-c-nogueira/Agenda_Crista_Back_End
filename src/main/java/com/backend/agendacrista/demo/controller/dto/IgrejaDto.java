@@ -45,4 +45,7 @@ public class IgrejaDto {
         return imagem_url;
     }
 
+    public Endereco getEndereco() {
+        return endereco;
+    }
 }

@@ -45,13 +45,13 @@ public class IgrejaController {
     }
     @Transactional
     @GetMapping("/admin/confirma-igreja/{id}")
-    public ResponseEntity<?> confirmaStatusIgreja(@PathVariable Long id, Pageable pageable) {
+    public ResponseEntity<?> confirmaStatusIgreja(@PathVariable Long id) {
         igrejaService.alteraStausIgreja(id, StatusIgreja.VERIFICADO);
         return ResponseEntity.ok().build();
     }
     @Transactional
     @GetMapping("/admin/bloqueia-igreja/{id}")
-    public ResponseEntity<?> bloqueiaStatusIgreja(@PathVariable Long id, Pageable pageable) {
+    public ResponseEntity<?> bloqueiaStatusIgreja(@PathVariable Long id) {
         igrejaService.alteraStausIgreja(id, StatusIgreja.BLOQUEADO);
         return ResponseEntity.ok().build();
     }
@@ -90,7 +90,7 @@ public class IgrejaController {
 
     @GetMapping("/usuario/logado")
     public ResponseEntity<List<DetalharIgrejaDto>> igrejasPorUsuarioLogado() {
-        List<Igreja> igrejas = igrejaRepository.findByUsuario(new Usuario(UsusarioService.getIdUsuarioLogado()));
+        List<Igreja> igrejas = igrejaRepository.findByUsuarioOrderByNome(new Usuario(UsusarioService.getIdUsuarioLogado()));
         return ResponseEntity.ok(DetalharIgrejaDto.converteIgrejaListParaIgrejaDtoList(igrejas));
     }
 

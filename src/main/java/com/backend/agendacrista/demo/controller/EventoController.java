@@ -16,6 +16,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.util.List;
 
 
 @RestController
@@ -31,6 +33,12 @@ public class EventoController {
     @GetMapping
     public Page<EventoDto> listar(Pageable pageable) {
         return EventoDto.converteEventoPageParaEventoDtoPage(eventoRepository.findAll(pageable));
+    }
+
+    @GetMapping("/ativo/igreja/{igrejaId}")
+    public ResponseEntity<List<DetalharEventoDto>> listarEv(@PathVariable Long igrejaId) {
+        List<Evento> listEvento = eventoRepository.findByDataFinalGreaterThanEqualAndIgrejaId(LocalDate.now(), igrejaId);
+        return ResponseEntity.ok(DetalharEventoDto.converteEventoListParaDetalharEventoDto(listEvento));
     }
 
     @GetMapping("/{id}")
