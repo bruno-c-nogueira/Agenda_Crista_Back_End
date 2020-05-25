@@ -6,22 +6,29 @@ import com.backend.agendacrista.demo.model.Igreja;
 import com.backend.agendacrista.demo.model.Usuario;
 import com.backend.agendacrista.demo.service.UsusarioService;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class IgrejaForm {
 
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String nome;
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String descricao;
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String imagem_url;
     @NotNull
+    @Valid
     private EnderecoForm endereco;
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String telefone;
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String doc_imagem_url;
 
     public String getNome() {

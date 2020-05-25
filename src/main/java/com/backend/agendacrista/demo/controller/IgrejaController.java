@@ -88,12 +88,9 @@ public class IgrejaController {
         return ResponseEntity.ok(new DetalharIgrejaDto(igrejaService.atualizaIgreja(id, atualizaIgrejaForm)));
     }
 
-    @GetMapping("/user")
+    @GetMapping("/usuario/logado")
     public ResponseEntity<List<DetalharIgrejaDto>> igrejasPorUsuarioLogado() {
         List<Igreja> igrejas = igrejaRepository.findByUsuario(new Usuario(UsusarioService.getIdUsuarioLogado()));
-        if (igrejas.isEmpty()) {
-            throw new ResourceNotFoundException("Usuario não tem igrejas");
-        }
         return ResponseEntity.ok(DetalharIgrejaDto.converteIgrejaListParaIgrejaDtoList(igrejas));
     }
 
