@@ -11,7 +11,6 @@ public class EnderecoForm {
     private String rua;
     @NotEmpty @NotNull
     private String numero;
-    @NotEmpty @NotNull
     private String complemento;
     @NotEmpty @NotNull
     private String bairro;
