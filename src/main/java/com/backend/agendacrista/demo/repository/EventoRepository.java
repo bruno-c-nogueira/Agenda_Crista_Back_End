@@ -14,9 +14,9 @@ public interface EventoRepository extends JpaRepository<Evento, Long> {
 
     Page<Evento> findByIgrejaId(Long id, Pageable pageable);
 
-    List<Evento> findByDataFinalGreaterThanEqualAndIgrejaId(LocalDate endDate, Long id);
+    List<Evento> findByDataFinalGreaterThanEqualOrDataFinalNullAndIgrejaId(LocalDate endDate, Long id);
 
-    List<Evento> findByDataFinalGreaterThanEqualAndIgrejaIdAndHorariosDiaDaSemana(LocalDate endDate, Long id, DiaDaSemana diaDaSemana);
+    List<Evento> findByDataFinalGreaterThanEqualOrDataFinalNullAndIgrejaIdAndHorariosDiaDaSemana(LocalDate endDate, Long id, DiaDaSemana diaDaSemana);
 
     List<Evento> findByHorariosDiaDaSemana(DiaDaSemana diasDaSemana);
 

@@ -22,10 +22,7 @@ public class EventoForm {
     @NotNull
     @NotEmpty
     private String nomeCelebrante;
-    @NotNull
-    @NotNull
     private LocalDate dataInicial;
-    @NotNull
     private LocalDate dataFinal;
     @NotNull
     private List<@Valid HorariosForm> horarios;

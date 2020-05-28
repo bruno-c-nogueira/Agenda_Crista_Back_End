@@ -38,13 +38,13 @@ public class EventoController {
 
     @GetMapping("/ativo/igreja/{igrejaId}")
     public ResponseEntity<List<DetalharEventoDto>> listarEventoAtivoPorIgreja(@PathVariable Long igrejaId) {
-        List<Evento> listEvento = eventoRepository.findByDataFinalGreaterThanEqualAndIgrejaId(LocalDate.now(), igrejaId);
+        List<Evento> listEvento = eventoRepository.findByDataFinalGreaterThanEqualOrDataFinalNullAndIgrejaId(LocalDate.now(), igrejaId);
         return ResponseEntity.ok(DetalharEventoDto.converteEventoListParaDetalharEventoDto(listEvento));
     }
 
     @GetMapping("/ativo/igreja/{igrejaId}/dia-semana/{diaDaSemana}")
     public ResponseEntity<List<DetalharEventoDto>> listarEventoAtivoPorIgrejaEDiaDaSemana(@PathVariable Long igrejaId, @PathVariable DiaDaSemana diaDaSemana) {
-        List<Evento> listEvento = eventoRepository.findByDataFinalGreaterThanEqualAndIgrejaIdAndHorariosDiaDaSemana(LocalDate.now(), igrejaId, diaDaSemana);
+        List<Evento> listEvento = eventoRepository.findByDataFinalGreaterThanEqualOrDataFinalNullAndIgrejaIdAndHorariosDiaDaSemana(LocalDate.now(), igrejaId, diaDaSemana);
         return ResponseEntity.ok(DetalharEventoDto.converteEventoListParaDetalharEventoDto(listEvento));
     }
 
