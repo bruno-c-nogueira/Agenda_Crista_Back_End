@@ -62,6 +62,12 @@ public class IgrejaController {
         return ResponseEntity.ok(new DetalharIgrejaDto(igrejaRepository.getOne(id)));
     }
 
+    @GetMapping("/cidade/{id}")
+    public ResponseEntity<DetalharIgrejaDto> liatarPorEstado(@PathVariable Long id) {
+        igrejaService.retornaIgrejasPorCidade(id);
+        return ResponseEntity.ok(new DetalharIgrejaDto(igrejaRepository.getOne(id)));
+    }
+
     @PostMapping
     @Transactional
     public ResponseEntity<?> cadastrar(@RequestBody @Valid IgrejaForm form, UriComponentsBuilder uriComponentsBuilder) {
