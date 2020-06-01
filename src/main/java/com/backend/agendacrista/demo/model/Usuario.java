@@ -25,6 +25,9 @@ public class Usuario extends AbstractEntity implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Perfil> perfils = new ArrayList<>();
 
+    @ManyToMany
+    private List<Igreja> igrejasFavoritas = new ArrayList<>();
+
     public Usuario(RegisterForm form) {
         this.nome = form.getNome();
         this.email = form.getEmail();
@@ -84,6 +87,14 @@ public class Usuario extends AbstractEntity implements UserDetails {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public List<Igreja> getIgrejasFavoritas() {
+        return igrejasFavoritas;
+    }
+
+    public void setIgrejasFavoritas(List<Igreja> igrejasFavoritas) {
+        this.igrejasFavoritas = igrejasFavoritas;
     }
 
     @Override

@@ -6,10 +6,14 @@ import com.backend.agendacrista.demo.error.UserPricipalNotAutorizedException;
 import com.backend.agendacrista.demo.model.Endereco;
 import com.backend.agendacrista.demo.model.Igreja;
 import com.backend.agendacrista.demo.model.StatusIgreja;
+import com.backend.agendacrista.demo.model.Usuario;
 import com.backend.agendacrista.demo.repository.CidadeRepository;
 import com.backend.agendacrista.demo.repository.IgrejaRepository;
+import com.backend.agendacrista.demo.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class IgrejaService {
@@ -19,9 +23,40 @@ public class IgrejaService {
     @Autowired
     CidadeRepository cidadeRepository;
 
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
+    public List<Igreja> igrejasFavoritasPorUsuarioLogado() {
+        return usuarioRepository.getOne(UsusarioService.getIdUsuarioLogado()).getIgrejasFavoritas();
+    }
+
+    public void adicionaIgrejaFavoritaPorId(Long id) {
+        Igreja igreja = igrejaRepository.getOne(id);
+        verificaSeIgrejaNaoEhFavorito(igreja);
+        usuarioRepository.getOne(UsusarioService.getIdUsuarioLogado()).getIgrejasFavoritas().add(igreja);
+    }
+
+    public void removeIgrejaFavoritaPorId(Long id) {
+        Igreja igreja = igrejaRepository.getOne(id);
+        verificaSeIgrejaEhFavorito(igreja);
+        usuarioRepository.getOne(UsusarioService.getIdUsuarioLogado()).getIgrejasFavoritas().remove(igreja);
+    }
+
     public void verificaSeIdIgrejaExiste(Long id) {
         if (igrejaRepository.findById(id).isEmpty())
             throw new ResourceNotFoundException("Id Igreja inválido");
+    }
+
+    private void verificaSeIgrejaNaoEhFavorito(Igreja igreja) {
+        Usuario usuario = usuarioRepository.getOne(UsusarioService.getIdUsuarioLogado());
+        if (usuario.getIgrejasFavoritas().contains(igreja))
+            throw new UnsupportedOperationException("Igreja ja é favorita");
+    }
+
+    private void verificaSeIgrejaEhFavorito(Igreja igreja) {
+        Usuario usuario = usuarioRepository.getOne(UsusarioService.getIdUsuarioLogado());
+        if (!usuario.getIgrejasFavoritas().contains(igreja))
+            throw new UnsupportedOperationException("Igreja não é favorita");
     }
 
     public void verificaSeUsuarioLogadoAutorIgreja(Long idIgreja) {

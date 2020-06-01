@@ -116,6 +116,20 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(UnsupportedOperationException.class)
+    public ResponseEntity<?> handleUnsupportedOperationException(UnsupportedOperationException uoException) {
+        ErrorDetails errorDetails = ErrorDetails.Builder.newBuilder()
+                .timestamp(new Date().getTime())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .title("Operação não suportada")
+                .detail(uoException.getMessage())
+                .developerMessage(uoException.getClass().getName())
+                .build();
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    //MethodArgumentTypeMismatchException tratar
+
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
         ErrorDetails errorDetails = ErrorDetails.Builder.newBuilder()

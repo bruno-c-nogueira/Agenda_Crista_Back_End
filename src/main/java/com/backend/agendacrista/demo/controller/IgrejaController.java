@@ -67,6 +67,28 @@ public class IgrejaController {
         return ResponseEntity.ok(DetalharIgrejaDto.converteIgrejaListParaIgrejaDtoList(igrejaRepository.findByEnderecoCidadeIdAndStatusIgrejaIs(id, StatusIgreja.VERIFICADO)));
     }
 
+    @GetMapping("/favoritas/")
+    public ResponseEntity<List<DetalharIgrejaDto>> listarIgrejasFavoritasPorUsuarioLogado() {
+        return ResponseEntity.ok(DetalharIgrejaDto.converteIgrejaListParaIgrejaDtoList(igrejaService.igrejasFavoritasPorUsuarioLogado()));
+    }
+
+    @Transactional
+    @PutMapping("/favoritar/{id}")
+    public ResponseEntity adicionaIgrejaFavoritaPorId(@PathVariable Long id) {
+        igrejaService.verificaSeIdIgrejaExiste(id);
+        igrejaService.adicionaIgrejaFavoritaPorId(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @Transactional
+    @PutMapping("/desfavoritar/{id}")
+    public ResponseEntity removeIgrejaFavoritaPorId(@PathVariable Long id) {
+        igrejaService.verificaSeIdIgrejaExiste(id);
+        igrejaService.removeIgrejaFavoritaPorId(id);
+        return ResponseEntity.ok().build();
+    }
+
+
     @PostMapping
     @Transactional
     public ResponseEntity<?> cadastrar(@RequestBody @Valid IgrejaForm form, UriComponentsBuilder uriComponentsBuilder) {
