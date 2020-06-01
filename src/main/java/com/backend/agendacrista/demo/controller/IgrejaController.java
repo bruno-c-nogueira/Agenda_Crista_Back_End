@@ -62,7 +62,7 @@ public class IgrejaController {
     }
 
     @GetMapping("/cidade/{id}")
-    public ResponseEntity<List<DetalharIgrejaDto>> listarIgrejasPorCidade(@PathVariable Long id) {
+    public ResponseEntity<List<DetalharIgrejaDto>> listarIgrejasPorCidafavoritadade(@PathVariable Long id) {
         localidadesService.verificaSeIdCidadeExiste(id);
         return ResponseEntity.ok(DetalharIgrejaDto.converteIgrejaListParaIgrejaDtoList(igrejaRepository.findByEnderecoCidadeIdAndStatusIgrejaIs(id, StatusIgreja.VERIFICADO)));
     }
@@ -70,6 +70,11 @@ public class IgrejaController {
     @GetMapping("/favoritas/")
     public ResponseEntity<List<DetalharIgrejaDto>> listarIgrejasFavoritasPorUsuarioLogado() {
         return ResponseEntity.ok(DetalharIgrejaDto.converteIgrejaListParaIgrejaDtoList(igrejaService.igrejasFavoritasPorUsuarioLogado()));
+    }
+
+    @GetMapping("/favoritada/{id}")
+    public ResponseEntity<?> verificaIgrejaEFavoritada(@PathVariable Long id) {
+        return ResponseEntity.ok(igrejaService.verificaIgrejaEFavoritada(id));
     }
 
     @Transactional

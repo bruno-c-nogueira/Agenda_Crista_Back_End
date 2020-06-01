@@ -17,6 +17,7 @@ import java.util.List;
 
 @Service
 public class IgrejaService {
+    boolean isFavoritada;
     @Autowired
     IgrejaRepository igrejaRepository;
 
@@ -34,6 +35,19 @@ public class IgrejaService {
         Igreja igreja = igrejaRepository.getOne(id);
         verificaSeIgrejaNaoEhFavorito(igreja);
         usuarioRepository.getOne(UsusarioService.getIdUsuarioLogado()).getIgrejasFavoritas().add(igreja);
+    }
+
+    public boolean verificaIgrejaEFavoritada(Long id) {
+        Igreja igreja = igrejaRepository.getOne(id);
+        verificaSeIgrejaNaoEhFavorito(igreja);
+        List<Igreja> igrejasFavoritas = usuarioRepository.getOne(UsusarioService.getIdUsuarioLogado()).getIgrejasFavoritas();
+        igrejasFavoritas.forEach(igrejaElement -> {
+            if (igrejaElement.getId() == id)
+                isFavoritada = true;
+            else
+                isFavoritada = false;
+        });
+        return isFavoritada;
     }
 
     public void removeIgrejaFavoritaPorId(Long id) {
