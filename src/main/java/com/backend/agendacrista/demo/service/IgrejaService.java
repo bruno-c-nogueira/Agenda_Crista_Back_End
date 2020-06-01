@@ -24,11 +24,6 @@ public class IgrejaService {
             throw new ResourceNotFoundException("Id Igreja inválido");
     }
 
-    public void retornaIgrejasPorCidade(Long id) {
-        if (igrejaRepository.findAllBy(id).isEmpty())
-            throw new ResourceNotFoundException("Id Igreja inválido");
-    }
-
     public void verificaSeUsuarioLogadoAutorIgreja(Long idIgreja) {
         if (igrejaRepository.getOne(idIgreja).getUsuario().getId() != UsusarioService.getIdUsuarioLogado())
             throw new UserPricipalNotAutorizedException("Usuário não tem permição");

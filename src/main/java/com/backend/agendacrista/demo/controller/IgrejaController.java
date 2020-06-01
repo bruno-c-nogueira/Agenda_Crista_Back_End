@@ -63,9 +63,9 @@ public class IgrejaController {
     }
 
     @GetMapping("/cidade/{id}")
-    public ResponseEntity<DetalharIgrejaDto> liatarPorEstado(@PathVariable Long id) {
-        igrejaService.retornaIgrejasPorCidade(id);
-        return ResponseEntity.ok(new DetalharIgrejaDto(igrejaRepository.getOne(id)));
+    public ResponseEntity<List<DetalharIgrejaDto>> listarIgrejasPorCidade(@PathVariable Long id) {
+        localidadesService.verificaSeIdCidadeExiste(id);
+        return ResponseEntity.ok(DetalharIgrejaDto.converteIgrejaListParaIgrejaDtoList(igrejaRepository.findByEnderecoCidadeId(id)));
     }
 
     @PostMapping

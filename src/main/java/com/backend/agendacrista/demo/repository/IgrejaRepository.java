@@ -14,8 +14,7 @@ public interface IgrejaRepository extends JpaRepository<Igreja, Long> {
 
     Page<Igreja> findByStatusIgreja(StatusIgreja statusIgreja, Pageable pageable);
 
-    @Query("select i from Igreja i where i.endereco.cidade.id = :id")
-    List<Igreja>findAllBy(Long id);
+    List<Igreja>findByEnderecoCidadeId(Long id);
 
     List<Igreja> findByUsuarioOrderByNome(Usuario usuario);
 
