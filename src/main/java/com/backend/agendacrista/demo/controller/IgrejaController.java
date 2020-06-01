@@ -4,7 +4,6 @@ import com.backend.agendacrista.demo.controller.dto.DetalharIgrejaDto;
 import com.backend.agendacrista.demo.controller.dto.IgrejaDto;
 import com.backend.agendacrista.demo.controller.form.AtualizaIgrejaForm;
 import com.backend.agendacrista.demo.controller.form.IgrejaForm;
-import com.backend.agendacrista.demo.error.ResourceNotFoundException;
 import com.backend.agendacrista.demo.model.Igreja;
 import com.backend.agendacrista.demo.model.StatusIgreja;
 import com.backend.agendacrista.demo.model.Usuario;
@@ -65,7 +64,7 @@ public class IgrejaController {
     @GetMapping("/cidade/{id}")
     public ResponseEntity<List<DetalharIgrejaDto>> listarIgrejasPorCidade(@PathVariable Long id) {
         localidadesService.verificaSeIdCidadeExiste(id);
-        return ResponseEntity.ok(DetalharIgrejaDto.converteIgrejaListParaIgrejaDtoList(igrejaRepository.findByEnderecoCidadeId(id)));
+        return ResponseEntity.ok(DetalharIgrejaDto.converteIgrejaListParaIgrejaDtoList(igrejaRepository.findByEnderecoCidadeIdAndStatusIgreja(id, StatusIgreja.VERIFICADO)));
     }
 
     @PostMapping
