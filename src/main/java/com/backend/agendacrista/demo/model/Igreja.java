@@ -10,9 +10,9 @@ public class Igreja extends AbstractEntity {
     private String descricao;
     private String imagem_url;
     private String telefone;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Usuario usuario;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL},fetch = FetchType.EAGER)
     private Endereco endereco;
     @Enumerated(value = EnumType.STRING)
     private StatusIgreja statusIgreja = StatusIgreja.EM_ANALISE;

@@ -38,16 +38,15 @@ public class IgrejaService {
     }
 
     public boolean verificaIgrejaEFavoritada(Long id) {
-        Igreja igreja = igrejaRepository.getOne(id);
-        verificaSeIgrejaNaoEhFavorito(igreja);
         List<Igreja> igrejasFavoritas = usuarioRepository.getOne(UsusarioService.getIdUsuarioLogado()).getIgrejasFavoritas();
-        igrejasFavoritas.forEach(igrejaElement -> {
-            if (igrejaElement.getId() == id)
-                isFavoritada = true;
-            else
-                isFavoritada = false;
-        });
-        return isFavoritada;
+        for (Igreja igrejaElement : igrejasFavoritas) {
+            if (igrejaElement.getId() == id) {
+                this.isFavoritada = true;
+                break;
+            } else
+                this.isFavoritada = false;
+        }
+        return this.isFavoritada;
     }
 
     public void removeIgrejaFavoritaPorId(Long id) {
@@ -61,10 +60,13 @@ public class IgrejaService {
             throw new ResourceNotFoundException("Id Igreja inválido");
     }
 
-    private void verificaSeIgrejaNaoEhFavorito(Igreja igreja) {
+    private boolean verificaSeIgrejaNaoEhFavorito(Igreja igreja) {
         Usuario usuario = usuarioRepository.getOne(UsusarioService.getIdUsuarioLogado());
         if (usuario.getIgrejasFavoritas().contains(igreja))
             throw new UnsupportedOperationException("Igreja ja é favorita");
+        else{
+            return false;
+        }
     }
 
     private void verificaSeIgrejaEhFavorito(Igreja igreja) {

@@ -9,6 +9,7 @@ public class DataEspecial extends AbstractEntity {
 
     private LocalDateTime dataEspecial;
     private String descricaoData;
+
     private String imagemData;
 
     public DataEspecial(LocalDateTime dataEspecial, String descricaoData, String imagemData) {
