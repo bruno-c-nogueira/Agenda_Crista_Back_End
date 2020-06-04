@@ -9,6 +9,7 @@ import com.backend.agendacrista.demo.repository.EventoRepository;
 import com.backend.agendacrista.demo.service.EventoService;
 import com.backend.agendacrista.demo.service.IgrejaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,8 @@ public class EventoController {
     EventoService eventoService;
     @Autowired
     IgrejaService igrejaService;
+    @Value("${agenda.fcm.topics.global}")
+    private String topicoGlobal;
 
     @GetMapping
     public Page<EventoDto> listar(Pageable pageable) {
@@ -76,6 +79,7 @@ public class EventoController {
         igrejaService.verificaSeIdIgrejaExiste(form.getIgreja_id());
         igrejaService.verificaSeUsuarioLogadoAutorIgreja(form.getIgreja_id());
         Evento evento = eventoRepository.save(form.converteEventoFormParaEvento());
+        eventoService.enviaNotificacaoEvento(evento, topicoGlobal);
         return ResponseEntity.created(uriComponentsBuilder.path("/eventos/{id}").buildAndExpand(evento.getId()).toUri()).body(new EventoDto(evento));
     }
 

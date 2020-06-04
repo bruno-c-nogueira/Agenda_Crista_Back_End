@@ -2,7 +2,10 @@ package com.backend.agendacrista.demo.model;
 
 import com.backend.agendacrista.demo.controller.form.EventoForm;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 import java.util.List;
 

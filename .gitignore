@@ -29,3 +29,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Config Prod ###
+
+*-prod.properties
