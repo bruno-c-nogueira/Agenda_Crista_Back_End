@@ -4,9 +4,6 @@ import com.backend.agendacrista.demo.model.Endereco;
 import com.backend.agendacrista.demo.model.Igreja;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 
 public class IgrejaDto {
 
