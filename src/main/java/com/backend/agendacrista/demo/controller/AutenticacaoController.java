@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @RestController
@@ -27,12 +28,14 @@ public class AutenticacaoController {
     @Autowired
     private TokenService tokenService;
 
+    @Transactional
     @PostMapping
     public ResponseEntity<Object> autenticar(@RequestBody @Valid LoginForm form) {
         UsernamePasswordAuthenticationToken dadosLogin = form.converter();
         Authentication authentication = authManager.authenticate(dadosLogin);
         String token = tokenService.gerarTokenLogin(authentication);
         Usuario userDetail = (Usuario) authentication.getPrincipal();
+        userDetail.setTokenFCM(form.getTokenFCM());
         return ResponseEntity.ok(new TokenDto(token, "Bearer", new UsuarioDto(userDetail)));
     }
 }

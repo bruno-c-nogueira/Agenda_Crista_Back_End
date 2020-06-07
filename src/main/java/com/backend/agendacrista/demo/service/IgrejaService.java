@@ -3,10 +3,7 @@ package com.backend.agendacrista.demo.service;
 import com.backend.agendacrista.demo.controller.form.AtualizaIgrejaForm;
 import com.backend.agendacrista.demo.error.ResourceNotFoundException;
 import com.backend.agendacrista.demo.error.UserPricipalNotAutorizedException;
-import com.backend.agendacrista.demo.model.Endereco;
-import com.backend.agendacrista.demo.model.Igreja;
-import com.backend.agendacrista.demo.model.StatusIgreja;
-import com.backend.agendacrista.demo.model.Usuario;
+import com.backend.agendacrista.demo.model.*;
 import com.backend.agendacrista.demo.repository.CidadeRepository;
 import com.backend.agendacrista.demo.repository.IgrejaRepository;
 import com.backend.agendacrista.demo.repository.UsuarioRepository;
@@ -17,7 +14,6 @@ import java.util.List;
 
 @Service
 public class IgrejaService {
-    boolean isFavoritada;
     @Autowired
     IgrejaRepository igrejaRepository;
 
@@ -26,6 +22,9 @@ public class IgrejaService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    PushNotificationFCMService pushNotificationFCMService;
 
     public List<Igreja> igrejasFavoritasPorUsuarioLogado() {
         return usuarioRepository.getOne(UsusarioService.getIdUsuarioLogado()).getIgrejasFavoritas();
@@ -77,6 +76,14 @@ public class IgrejaService {
         verificaSeIdIgrejaExiste(idIgreja);
         Igreja igreja = igrejaRepository.getOne(idIgreja);
         igreja.setStatusIgreja(statusIgreja);
+        enviaMensagemStatus(idIgreja, statusIgreja);
+    }
+
+    public void enviaMensagemStatus(Long idIgreja, StatusIgreja statusIgreja) {
+        Igreja igreja = igrejaRepository.getOne(idIgreja);
+        String body = statusIgreja == StatusIgreja.VERIFICADO ? "Ola, sua igreja foi verificada! Acesse o aplicativo e adicione novos eventos!" : "Algum dado que você enviou sobre a Igreja pode estar inconsistente com nossa plataforma. Dúvidas entre em contato pelo email.";
+        PushFcmAbstract pushFcmAbstract = new PushFcmTo(igreja.getUsuario().getTokenFCM(), new PushFCMNotification(igreja.getNome(), body));
+        pushNotificationFCMService.sendNotification(pushFcmAbstract);
     }
 
     public Igreja atualizaIgreja(Long idIgreja, AtualizaIgrejaForm igrejaForm) {

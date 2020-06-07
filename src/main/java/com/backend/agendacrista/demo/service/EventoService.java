@@ -2,15 +2,16 @@ package com.backend.agendacrista.demo.service;
 
 import com.backend.agendacrista.demo.controller.form.EventoForm;
 import com.backend.agendacrista.demo.error.ResourceNotFoundException;
-import com.backend.agendacrista.demo.model.Evento;
-import com.backend.agendacrista.demo.model.Igreja;
-import com.backend.agendacrista.demo.model.PushFCM;
-import com.backend.agendacrista.demo.model.PushFCMNotification;
+import com.backend.agendacrista.demo.model.*;
 import com.backend.agendacrista.demo.repository.EventoRepository;
 import com.backend.agendacrista.demo.repository.HorariosRepository;
 import com.backend.agendacrista.demo.repository.IgrejaRepository;
+import com.backend.agendacrista.demo.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class EventoService {
@@ -20,6 +21,8 @@ public class EventoService {
     IgrejaRepository igrejaRepository;
     @Autowired
     HorariosRepository horariosRepository;
+    @Autowired
+    UsuarioRepository usuarioRepository;
     @Autowired
     PushNotificationFCMService pnfcmService;
 
@@ -34,12 +37,15 @@ public class EventoService {
         return eventoRepository.save(eventoForm.converteEventoFormParaEventoESetId(idEvento));
     }
 
-    public void enviaNotificacaoEvento(Evento evento, String topico) {
+    public void enviaNotificacaoEvento(Evento evento) {
         Igreja igreja = igrejaRepository.getOne(evento.getIgreja().getId());
         String title = igreja.getNome() + ": " + evento.getTitulo();
         String body = evento.getDescricao();
-        PushFCM pushFCM = new PushFCM(topico, new PushFCMNotification(title, body));
-        pnfcmService.sendNotification(pushFCM);
+        List<String> registrationIds = new ArrayList<>();
+        List<Usuario> byIgrejasFavoritasContaining = usuarioRepository.findAllByIgrejasFavoritasContaining(igreja);
+        byIgrejasFavoritasContaining.forEach(usuario -> registrationIds.add(usuario.getTokenFCM()));
+        PushFcmAbstract pushFcmAbstract = new PushFcmRegistrationIds(registrationIds, new PushFCMNotification(title, body));
+        pnfcmService.sendNotification(pushFcmAbstract);
 
     }
 }

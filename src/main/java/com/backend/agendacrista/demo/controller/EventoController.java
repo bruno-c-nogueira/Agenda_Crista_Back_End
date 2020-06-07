@@ -31,8 +31,6 @@ public class EventoController {
     EventoService eventoService;
     @Autowired
     IgrejaService igrejaService;
-    @Value("${agenda.fcm.topics.global}")
-    private String topicoGlobal;
 
     @GetMapping
     public Page<EventoDto> listar(Pageable pageable) {
@@ -79,7 +77,7 @@ public class EventoController {
         igrejaService.verificaSeIdIgrejaExiste(form.getIgreja_id());
         igrejaService.verificaSeUsuarioLogadoAutorIgreja(form.getIgreja_id());
         Evento evento = eventoRepository.save(form.converteEventoFormParaEvento());
-        eventoService.enviaNotificacaoEvento(evento, topicoGlobal);
+        eventoService.enviaNotificacaoEvento(evento);
         return ResponseEntity.created(uriComponentsBuilder.path("/eventos/{id}").buildAndExpand(evento.getId()).toUri()).body(new EventoDto(evento));
     }
 

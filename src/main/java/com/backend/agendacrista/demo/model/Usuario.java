@@ -19,6 +19,7 @@ public class Usuario extends AbstractEntity implements UserDetails {
     private boolean ativo = true;
     private LocalDateTime criadoEm = LocalDateTime.now();
     private LocalDateTime verificadoEm;
+    private String tokenFCM;
     @OneToOne
     private Endereco endereco;
 
@@ -95,6 +96,14 @@ public class Usuario extends AbstractEntity implements UserDetails {
 
     public void setIgrejasFavoritas(List<Igreja> igrejasFavoritas) {
         this.igrejasFavoritas = igrejasFavoritas;
+    }
+
+    public String getTokenFCM() {
+        return tokenFCM;
+    }
+
+    public void setTokenFCM(String tokenFCM) {
+        this.tokenFCM = tokenFCM;
     }
 
     @Override

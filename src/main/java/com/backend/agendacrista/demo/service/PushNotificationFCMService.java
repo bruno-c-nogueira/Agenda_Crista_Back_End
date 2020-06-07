@@ -1,6 +1,6 @@
 package com.backend.agendacrista.demo.service;
 
-import com.backend.agendacrista.demo.model.PushFCM;
+import com.backend.agendacrista.demo.model.PushFcmAbstract;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,13 +29,15 @@ public class PushNotificationFCMService {
 
 
     @Async
-    public void sendNotification(PushFCM pushFCM) {
+    public void sendNotification(PushFcmAbstract pushFcmAbstract) {
         try {
-            HttpEntity<PushFCM> httpEntity = new HttpEntity<PushFCM>(pushFCM, setHeaders());
+            if (pushFcmAbstract.isEmptyDestination())
+                throw new RestClientException("Destination is empty");
+            HttpEntity<PushFcmAbstract> httpEntity = new HttpEntity<PushFcmAbstract>(pushFcmAbstract, setHeaders());
             ResponseEntity<String> responseEntity = restTemplate.postForEntity("/send", httpEntity, String.class);
-            logger.info("Sent message. Topic: " + pushFCM.getTo() + " Status Code: " + responseEntity.getStatusCode());
+            logger.info("Sent message. Destination:" + pushFcmAbstract.getDestination() + " Status Code: " + responseEntity.getStatusCode());
         } catch (RestClientException e) {
-            logger.error("Sent message. Topic: " + pushFCM.getTo() + " Error: " + e.getMessage());
+            logger.error("Sent message. Destination:" + pushFcmAbstract.getDestination() + " Error: " + e.getMessage());
         }
     }
 

@@ -13,7 +13,15 @@ public class LoginForm {
     private String email;
     @NotEmpty @NotNull(message = "campo senha é obrigatorio")
     private String senha;
+    private String tokenFCM;
 
+    public String getTokenFCM() {
+        return tokenFCM;
+    }
+
+    public void setTokenFCM(String tokenFCM) {
+        this.tokenFCM = tokenFCM;
+    }
 
     public void setEmail(String email) {
         this.email = email;

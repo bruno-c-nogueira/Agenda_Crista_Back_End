@@ -43,13 +43,13 @@ public class IgrejaController {
         return DetalharIgrejaDto.converteIgrejaPageParaDetalharIgrejaDtoPage(igrejaRepository.findByStatusIgreja(StatusIgreja.EM_ANALISE, pageable));
     }
     @Transactional
-    @GetMapping("/admin/confirma-igreja/{id}")
+    @PutMapping("/admin/confirma-igreja/{id}")
     public ResponseEntity<?> confirmaStatusIgreja(@PathVariable Long id) {
         igrejaService.alteraStausIgreja(id, StatusIgreja.VERIFICADO);
         return ResponseEntity.ok().build();
     }
     @Transactional
-    @GetMapping("/admin/bloqueia-igreja/{id}")
+    @PutMapping("/admin/bloqueia-igreja/{id}")
     public ResponseEntity<?> bloqueiaStatusIgreja(@PathVariable Long id) {
         igrejaService.alteraStausIgreja(id, StatusIgreja.BLOQUEADO);
         return ResponseEntity.ok().build();
