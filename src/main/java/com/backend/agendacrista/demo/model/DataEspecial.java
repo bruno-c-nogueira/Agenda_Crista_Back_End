@@ -1,6 +1,7 @@
 package com.backend.agendacrista.demo.model;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.time.LocalDateTime;
 
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 public class DataEspecial extends AbstractEntity {
 
     private LocalDateTime dataEspecial;
+    @Column(columnDefinition="TEXT")
     private String descricaoData;
     private String tituloData;
     private String imagemData;

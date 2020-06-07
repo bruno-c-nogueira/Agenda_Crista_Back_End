@@ -33,3 +33,4 @@ build/
 ### Config Prod ###
 
 *-prod.properties
+deployec2.sh
