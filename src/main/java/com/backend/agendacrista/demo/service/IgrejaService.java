@@ -39,14 +39,7 @@ public class IgrejaService {
 
     public boolean verificaIgrejaEFavoritada(Long id) {
         List<Igreja> igrejasFavoritas = usuarioRepository.getOne(UsusarioService.getIdUsuarioLogado()).getIgrejasFavoritas();
-        for (Igreja igrejaElement : igrejasFavoritas) {
-            if (igrejaElement.getId() == id) {
-                this.isFavoritada = true;
-                break;
-            } else
-                this.isFavoritada = false;
-        }
-        return this.isFavoritada;
+        return igrejasFavoritas.contains(new Igreja(id));
     }
 
     public void removeIgrejaFavoritaPorId(Long id) {

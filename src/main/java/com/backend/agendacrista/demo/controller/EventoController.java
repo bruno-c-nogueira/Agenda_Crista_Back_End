@@ -41,7 +41,7 @@ public class EventoController {
 
     @GetMapping("/ativo/igreja/{igrejaId}")
     public ResponseEntity<List<DetalharEventoDto>> listarEventoAtivoPorIgreja(@PathVariable Long igrejaId) {
-        List<Evento> listEvento = eventoRepository.findAllByIgrejaIdIs(LocalDate.now(), igrejaId);
+        List<Evento> listEvento = eventoRepository.findByDataFinalGreaterThanEqualOrDataFinalNullAndIgrejaId(LocalDate.now(), igrejaId);
         return ResponseEntity.ok(DetalharEventoDto.converteEventoListParaDetalharEventoDto(listEvento));
     }
 
