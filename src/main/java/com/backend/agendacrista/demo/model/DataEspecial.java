@@ -9,7 +9,7 @@ public class DataEspecial extends AbstractEntity {
 
     private LocalDateTime dataEspecial;
     private String descricaoData;
-
+    private String tituloData;
     private String imagemData;
 
     public DataEspecial(LocalDateTime dataEspecial, String descricaoData, String imagemData) {
@@ -20,6 +20,14 @@ public class DataEspecial extends AbstractEntity {
     }
 
     public DataEspecial() {
+    }
+
+    public String getTituloData() {
+        return tituloData;
+    }
+
+    public void setTituloData(String tituloData) {
+        this.tituloData = tituloData;
     }
 
     public String getImagemData() {

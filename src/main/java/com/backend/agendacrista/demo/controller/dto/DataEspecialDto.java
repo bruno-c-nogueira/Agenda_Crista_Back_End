@@ -9,30 +9,56 @@ import java.util.List;
 public class DataEspecialDto {
     private Long id;
     private LocalDateTime dataEspecial;
-    private String descricaoData;
-    private String imagemData;
+    private String descricao;
+    private String imagem;
+    private String titulo;
 
     public DataEspecialDto(DataEspecial dataEspecial) {
         this.id = dataEspecial.getId();
         this.dataEspecial = dataEspecial.getDataEspecial();
-        this.descricaoData = dataEspecial.getDescricaoData();
-        this.imagemData = dataEspecial.getImagemData();
+        this.descricao = dataEspecial.getDescricaoData();
+        this.imagem = dataEspecial.getImagemData();
+        this.titulo = dataEspecial.getTituloData();
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public LocalDateTime getDataEspecial() {
         return dataEspecial;
     }
 
-    public String getDescricaoData() {
-        return descricaoData;
+    public void setDataEspecial(LocalDateTime dataEspecial) {
+        this.dataEspecial = dataEspecial;
     }
 
-    public String getImagemData() {
-        return imagemData;
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public static List<DataEspecialDto> converteDataEspecialListParaDataEspecialDtoList(List<DataEspecial> dataEspecia){

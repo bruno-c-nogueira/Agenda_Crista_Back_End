@@ -18,4 +18,5 @@ public interface IgrejaRepository extends JpaRepository<Igreja, Long> {
 
     List<Igreja> findByUsuarioOrderByNome(Usuario usuario);
 
+
 }
