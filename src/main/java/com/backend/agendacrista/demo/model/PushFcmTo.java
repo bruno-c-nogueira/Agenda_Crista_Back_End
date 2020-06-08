@@ -24,6 +24,6 @@ public class PushFcmTo extends PushFcmAbstract {
 
     @Override
     public boolean isEmptyDestination() {
-        return this.to.isEmpty();
+        return this.to == null;
     }
 }

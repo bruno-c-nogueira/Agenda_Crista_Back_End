@@ -19,14 +19,14 @@ public class Usuario extends AbstractEntity implements UserDetails {
     private boolean ativo = true;
     private LocalDateTime criadoEm = LocalDateTime.now();
     private LocalDateTime verificadoEm;
-    private String tokenFCM;
+    private String tokenFcm;
     @OneToOne
     private Endereco endereco;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Perfil> perfils = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     private List<Igreja> igrejasFavoritas = new ArrayList<>();
 
     public Usuario(RegisterForm form) {
@@ -98,12 +98,12 @@ public class Usuario extends AbstractEntity implements UserDetails {
         this.igrejasFavoritas = igrejasFavoritas;
     }
 
-    public String getTokenFCM() {
-        return tokenFCM;
+    public String getTokenFcm() {
+        return tokenFcm;
     }
 
-    public void setTokenFCM(String tokenFCM) {
-        this.tokenFCM = tokenFCM;
+    public void setTokenFcm(String tokenFCM) {
+        this.tokenFcm = tokenFCM;
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.backend.agendacrista.demo.controller.form;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -13,14 +12,14 @@ public class LoginForm {
     private String email;
     @NotEmpty @NotNull(message = "campo senha é obrigatorio")
     private String senha;
-    private String tokenFCM;
+    private String tokenFcm;
 
-    public String getTokenFCM() {
-        return tokenFCM;
+    public String getTokenFcm() {
+        return tokenFcm;
     }
 
-    public void setTokenFCM(String tokenFCM) {
-        this.tokenFCM = tokenFCM;
+    public void setTokenFcm(String tokenFcm) {
+        this.tokenFcm = tokenFcm;
     }
 
     public void setEmail(String email) {

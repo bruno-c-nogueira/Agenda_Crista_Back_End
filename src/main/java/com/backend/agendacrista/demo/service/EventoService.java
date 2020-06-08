@@ -1,5 +1,6 @@
 package com.backend.agendacrista.demo.service;
 
+import com.backend.agendacrista.demo.controller.dto.DetalharIgrejaDto;
 import com.backend.agendacrista.demo.controller.form.EventoForm;
 import com.backend.agendacrista.demo.error.ResourceNotFoundException;
 import com.backend.agendacrista.demo.model.*;
@@ -43,8 +44,9 @@ public class EventoService {
         String body = evento.getDescricao();
         List<String> registrationIds = new ArrayList<>();
         List<Usuario> byIgrejasFavoritasContaining = usuarioRepository.findAllByIgrejasFavoritasContaining(igreja);
-        byIgrejasFavoritasContaining.forEach(usuario -> registrationIds.add(usuario.getTokenFCM()));
+        byIgrejasFavoritasContaining.forEach(usuario -> registrationIds.add(usuario.getTokenFcm()));
         PushFcmAbstract pushFcmAbstract = new PushFcmRegistrationIds(registrationIds, new PushFCMNotification(title, body));
+        pushFcmAbstract.setData(new DetalharIgrejaDto(igreja));
         pnfcmService.sendNotification(pushFcmAbstract);
 
     }
