@@ -8,9 +8,10 @@ import com.backend.agendacrista.demo.model.Igreja;
 import com.backend.agendacrista.demo.model.StatusIgreja;
 import com.backend.agendacrista.demo.model.Usuario;
 import com.backend.agendacrista.demo.repository.IgrejaRepository;
+import com.backend.agendacrista.demo.repository.UsuarioRepository;
 import com.backend.agendacrista.demo.service.IgrejaService;
 import com.backend.agendacrista.demo.service.LocalidadesService;
-import com.backend.agendacrista.demo.service.UsusarioService;
+import com.backend.agendacrista.demo.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +33,8 @@ public class IgrejaController {
     private IgrejaService igrejaService;
     @Autowired
     private LocalidadesService localidadesService;
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     @GetMapping
     public Page<IgrejaDto> listar(Pageable pageable) {
@@ -108,7 +111,7 @@ public class IgrejaController {
     public ResponseEntity deletar(@PathVariable Long id) {
         igrejaService.verificaSeIdIgrejaExiste(id);
         igrejaService.verificaSeUsuarioLogadoAutorIgreja(id);
-        igrejaRepository.deleteById(id);
+        igrejaService.deletaIgreja(id);
         return ResponseEntity.ok().build();
     }
 
@@ -122,7 +125,7 @@ public class IgrejaController {
 
     @GetMapping("/usuario/logado")
     public ResponseEntity<List<DetalharIgrejaDto>> igrejasPorUsuarioLogado() {
-        List<Igreja> igrejas = igrejaRepository.findByUsuarioOrderByNome(new Usuario(UsusarioService.getIdUsuarioLogado()));
+        List<Igreja> igrejas = igrejaRepository.findByUsuarioOrderByNome(new Usuario(UsuarioService.getIdUsuarioLogado()));
         return ResponseEntity.ok(DetalharIgrejaDto.converteIgrejaListParaIgrejaDtoList(igrejas));
     }
 

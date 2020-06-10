@@ -27,24 +27,24 @@ public class IgrejaService {
     PushNotificationFCMService pushNotificationFCMService;
 
     public List<Igreja> igrejasFavoritasPorUsuarioLogado() {
-        return usuarioRepository.getOne(UsusarioService.getIdUsuarioLogado()).getIgrejasFavoritas();
+        return usuarioRepository.getOne(UsuarioService.getIdUsuarioLogado()).getIgrejasFavoritas();
     }
 
     public void adicionaIgrejaFavoritaPorId(Long id) {
         Igreja igreja = igrejaRepository.getOne(id);
         verificaSeIgrejaNaoEhFavorito(igreja);
-        usuarioRepository.getOne(UsusarioService.getIdUsuarioLogado()).getIgrejasFavoritas().add(igreja);
+        usuarioRepository.getOne(UsuarioService.getIdUsuarioLogado()).getIgrejasFavoritas().add(igreja);
     }
 
     public boolean verificaIgrejaEFavoritada(Long id) {
-        List<Igreja> igrejasFavoritas = usuarioRepository.getOne(UsusarioService.getIdUsuarioLogado()).getIgrejasFavoritas();
+        List<Igreja> igrejasFavoritas = usuarioRepository.getOne(UsuarioService.getIdUsuarioLogado()).getIgrejasFavoritas();
         return igrejasFavoritas.contains(new Igreja(id));
     }
 
     public void removeIgrejaFavoritaPorId(Long id) {
         Igreja igreja = igrejaRepository.getOne(id);
         verificaSeIgrejaEhFavorito(igreja);
-        usuarioRepository.getOne(UsusarioService.getIdUsuarioLogado()).getIgrejasFavoritas().remove(igreja);
+        usuarioRepository.getOne(UsuarioService.getIdUsuarioLogado()).getIgrejasFavoritas().remove(igreja);
     }
 
     public void verificaSeIdIgrejaExiste(Long id) {
@@ -52,23 +52,20 @@ public class IgrejaService {
             throw new ResourceNotFoundException("Id Igreja inválido");
     }
 
-    private boolean verificaSeIgrejaNaoEhFavorito(Igreja igreja) {
-        Usuario usuario = usuarioRepository.getOne(UsusarioService.getIdUsuarioLogado());
+    private void verificaSeIgrejaNaoEhFavorito(Igreja igreja) {
+        Usuario usuario = usuarioRepository.getOne(UsuarioService.getIdUsuarioLogado());
         if (usuario.getIgrejasFavoritas().contains(igreja))
             throw new UnsupportedOperationException("Igreja ja é favorita");
-        else{
-            return false;
-        }
     }
 
     private void verificaSeIgrejaEhFavorito(Igreja igreja) {
-        Usuario usuario = usuarioRepository.getOne(UsusarioService.getIdUsuarioLogado());
+        Usuario usuario = usuarioRepository.getOne(UsuarioService.getIdUsuarioLogado());
         if (!usuario.getIgrejasFavoritas().contains(igreja))
             throw new UnsupportedOperationException("Igreja não é favorita");
     }
 
     public void verificaSeUsuarioLogadoAutorIgreja(Long idIgreja) {
-        if (igrejaRepository.getOne(idIgreja).getUsuario().getId() != UsusarioService.getIdUsuarioLogado())
+        if (igrejaRepository.getOne(idIgreja).getUsuario().getId() != UsuarioService.getIdUsuarioLogado())
             throw new UserPricipalNotAutorizedException("Usuário não tem permição");
     }
 
@@ -99,5 +96,11 @@ public class IgrejaService {
         endereco.setComplemento(igrejaForm.getEndereco().getComplemento());
         endereco.setCidade(cidadeRepository.getOne(igrejaForm.getEndereco().getCidade_id()));
         return igreja;
+    }
+
+    public void deletaIgreja(Long id) {
+        Igreja igreja = igrejaRepository.getOne(id);
+        usuarioRepository.findAllByIgrejasFavoritasContaining(igreja).forEach(usuario -> usuario.getIgrejasFavoritas().remove(igreja));
+        igrejaRepository.deleteById(id);
     }
 }

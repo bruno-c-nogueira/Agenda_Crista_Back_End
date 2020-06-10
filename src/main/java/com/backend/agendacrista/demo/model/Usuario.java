@@ -1,14 +1,14 @@
 package com.backend.agendacrista.demo.model;
 
 import com.backend.agendacrista.demo.controller.form.RegisterForm;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Usuario extends AbstractEntity implements UserDetails {
@@ -23,10 +23,10 @@ public class Usuario extends AbstractEntity implements UserDetails {
     @OneToOne
     private Endereco endereco;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Perfil> perfils = new ArrayList<>();
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    private Set<Perfil> perfils = new HashSet<>();
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private List<Igreja> igrejasFavoritas = new ArrayList<>();
 
     public Usuario(RegisterForm form) {
