@@ -21,23 +21,27 @@ public class TokenService {
 
     private final String issuerTokenLogin = "login";
     private final String issuerTokenConfirmEmail = "email";
+    private final String issuuerTokenReuperarSenha = "recovery-password";
 
     public String gerarTokenLogin(Authentication authentication) {
-        return this.gerarToken(authentication, issuerTokenLogin);
+        Usuario usuario = (Usuario) authentication.getPrincipal();
+        return this.gerarToken(usuario, issuerTokenLogin, this.expiration);
     }
 
-    public String gerarTokenConfirmEmail(Authentication authentication) {
-        return this.gerarToken(authentication, issuerTokenConfirmEmail);
+    public String gerarTokenConfirmEmail(Usuario usuario) {
+        return this.gerarToken(usuario, issuerTokenConfirmEmail, this.expiration);
     }
 
-    public String gerarToken(Authentication authentication, String issuer) {
-        Usuario usuarioLogado = (Usuario) authentication.getPrincipal();
+    public String gerarTokenRecuperarSenha(Usuario usuario) {
+        return this.gerarToken(usuario, issuuerTokenReuperarSenha, this.expiration);
+    }
+
+    public String gerarToken(Usuario usuario, String issuer, String expiration) {
         Date hoje = new Date();
         Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
-
         return Jwts.builder()
                 .setIssuer(issuer)
-                .setSubject(usuarioLogado.getId().toString())
+                .setSubject(usuario.getId().toString())
                 .setIssuedAt(hoje)
                 .setExpiration(dataExpiracao)
                 .signWith(SignatureAlgorithm.HS256, secret)
@@ -50,6 +54,10 @@ public class TokenService {
 
     public boolean isTokenConfirmEmailValido(String token) {
         return this.isTokenValido(token, issuerTokenConfirmEmail);
+    }
+
+    public boolean isTokenRecuperarSenhaValido(String token) {
+        return this.isTokenValido(token, issuuerTokenReuperarSenha);
     }
 
     public boolean isTokenValido(String token, String issuer) {
