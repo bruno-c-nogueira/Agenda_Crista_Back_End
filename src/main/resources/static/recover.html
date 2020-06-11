@@ -1,0 +1,278 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Agenda Cristã</title>
+  <base href="/"/>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <link rel="icon" type="image/x-icon" href="/auth/img/favicon.ico"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style>
+    *, ::before, ::after {
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    html {
+      height: 100%;
+    }
+
+    body {
+      background: #FFF;
+      height: 100%;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+    }
+
+    header {
+      background-image: linear-gradient(to right, #193440, #110101);
+      height: 370px;
+      color: #FFF;
+      text-align: center;
+      font-size: 1.3rem;
+    }
+
+    section {
+      font-size: 1.2rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin: 3rem 0;
+      text-align: center;
+    }
+
+    footer {
+      bottom: 10px;
+      color: #000;
+      font-size: 0.8rem;
+      text-align: center;
+      width: 100%;
+    }
+
+
+    .logo-wrapper {
+      padding: 4rem;
+    }
+
+    .logo {
+      max-width:150px;
+      max-height:150px;
+    }
+
+    .container {
+      max-width: 800px;
+    }
+
+    .contact {
+      background: #F2F2F2;
+      font-size: 1rem;
+    }
+
+    .input-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .password-box input {
+      width: 290px;
+      margin-bottom: 1.5rem;
+      padding: 1em 2em 1em 1em;
+      font-size: .8em;
+      padding-right: 3em;
+      background: #F4F8F9;
+      border: none;
+      outline: none;
+    }
+
+    .password-box input::placeholder {
+      opacity: .6;
+    }
+
+    .password-box {
+      display: flex;
+    }
+
+    .hide-show {
+      margin-left: -2.5em;
+      margin-top: .45em;
+      opacity: 0.5;
+    }
+
+    .hide-show span {
+      padding: .2em .7em;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      user-select: none;
+    }
+
+    form button {
+      width: 300px;
+      border: 2px solid #110101;
+      background: none;
+      padding: 1em 0;
+      color: #110101;
+      cursor: pointer;
+      border-radius: 20px;
+      font-weight: bold;
+      margin-top: 2rem;
+    }
+
+    form button:hover,
+    form button:focus {
+      background: #193440;
+      color: #FFF;
+    }
+
+    .error {
+      padding: 0 4%;
+      color: #C00;
+      font-size: .9rem;
+      text-align: center;
+      display: none;
+      max-width: 600px;
+      margin-top: 5px;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-wrapper">
+      <img class="logo" src="https://firebasestorage.googleapis.com/v0/b/agenda-crista.appspot.com/o/god.png?alt=media&token=d086d02c-b7b0-47a6-b344-f5de27b4054b" alt="Agenda Cristã" />
+    </div>
+    <p id="change_msg">
+      Preencha os campos abaixo para redefinir sua senha.
+    </p>
+    <div class="success" style="display: none;">
+      <p>Sua senha foi redefinida com sucesso.</p>
+    </div>
+  </header>
+  <section class="login-wrapper">
+    <form class="reset-form">
+      <div class="input-wrapper">
+        <div class="password-box">
+          <input required="true" id="newPassword" name="newPassword" type="password" placeholder="Sua nova senha"/>
+          <div class="hide-show">
+            <span><i class="material-icons">visibility</i></span>
+          </div>
+        </div>
+
+        <div class="password-box">
+          <input required="true" id="newPasswordCheck" name="newPasswordCheck" type="password" placeholder="Repita sua nova senha"/>
+          <div class="hide-show">
+            <span><i class="material-icons">visibility</i></span>
+            </di//v>
+          </div>
+        </div>
+      </div>
+      <div class="error">Algo deu errado. ai ai ai...</div>
+      <button id="submitReset" type="submit">Redefinir Senha</button>
+
+    </form>
+    <div class="success" style="display: none;">
+      <p>Agora você pode usar sua nova senha para acessar nosso aplicativo.</p>
+    </div>
+  </section>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script>
+    /*<![CDATA[*/
+    $(function(){
+
+      var basePath = "http:\/\/" + window.location.host;
+
+      $('input[name="password"]').focus();
+      $('.hide-show').show();
+      $('.hide-show span').addClass('show')
+
+      $('.hide-show span').click(function(){
+        if( $(this).hasClass('show') ) {
+          $('.hide-show span i').text('visibility_off');
+          $('input[type="password"]').attr('type','text');
+          $(this).removeClass('show');
+        } else {
+          $('.hide-show span i').text('visibility');
+          $('input[type="text"]').attr('type','password');
+          $(this).addClass('show');
+        }
+      });
+
+      var setNewPassword = function(password) {
+        var newPassword = { "password" : password, "token": location.search.substring(7) };
+
+
+        $.ajax({
+          type: "POST",
+          url:  basePath + "/auth/resetPassword/complete",
+          contentType: "application/json",
+          data: JSON.stringify(newPassword),
+            success: function(){
+              showSuccess();
+            },
+          error: function(xhr, status, error) {
+            switch (xhr.status) {
+              case 400:
+                showError("Esse pedido para redefinir a senha expirou :( <br/> Peça outro pelo app.");
+                break;
+              case 401:
+                showError("Esse pedido para redefinir a senha expirou :( <br/> Peça outro pelo app.");
+                break;
+              case 500:
+              case 502:
+              case 503:
+              case 504:
+                showError("Ops, parece que estamos com problemas técnicos. Por favor, tente novamente mais tarde.");
+                break;
+              default:
+                showError("Tivemos um problema para redefinir sua senha. Está tudo certo com a sua conexão?");
+            }
+          }
+        });
+
+      }
+
+      var showError = function(message) {
+        if (message.length) $('.error').html(message);
+        $('.error').show();
+        $('#submitReset').removeAttr('disabled');
+      };
+
+      var showSuccess = function() {
+        $('form').hide();
+        $('#change_msg').hide();
+        $('.success').show();
+      };
+
+      $('form').submit( function(e) {
+        e.preventDefault();
+
+        var newPassword = $('#newPassword').val();
+        var newPasswordCheck = $('#newPasswordCheck').val();
+
+        $('#submitReset').attr('disabled', 'disabled');
+
+        if ((newPassword.length >= 8) && (newPassword === newPasswordCheck)) {
+          setNewPassword(newPassword);
+        } else if (newPassword.length < 8) {
+          showError('Por favor, use uma senha com ao menos 8 carateres.');
+        } else {
+          showError('Por favor, digite a mesma senha nos dois campos.');
+        }
+      });
+    });
+    /*]]>*/
+  </script>
+</body>
+
+<footer>
+  <p>&copy; Copyright Agenda Cristã 2020 - Entre em contato pelo email: <a href="mailto:agendacristaservice@gmail.com">agendacristaservice@gmail.com</a></p>
+</footer>
+<br>
+</html>

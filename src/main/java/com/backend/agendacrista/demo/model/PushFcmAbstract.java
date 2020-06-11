@@ -3,18 +3,18 @@ package com.backend.agendacrista.demo.model;
 
 public abstract class PushFcmAbstract {
 
-    private PushFCMNotification notification;
+    private PushFcmNotification notification;
     private Object data;
 
-    public PushFcmAbstract(PushFCMNotification notification) {
+    public PushFcmAbstract(PushFcmNotification notification) {
         this.notification = notification;
     }
 
-    public PushFCMNotification getNotification() {
+    public PushFcmNotification getNotification() {
         return notification;
     }
 
-    public void setNotification(PushFCMNotification notification) {
+    public void setNotification(PushFcmNotification notification) {
         this.notification = notification;
     }
 

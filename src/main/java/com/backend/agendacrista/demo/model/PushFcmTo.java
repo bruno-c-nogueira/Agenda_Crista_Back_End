@@ -4,7 +4,7 @@ public class PushFcmTo extends PushFcmAbstract {
 
     private String to;
 
-    public PushFcmTo(String to, PushFCMNotification notification) {
+    public PushFcmTo(String to, PushFcmNotification notification) {
         super(notification);
         this.to = to;
     }

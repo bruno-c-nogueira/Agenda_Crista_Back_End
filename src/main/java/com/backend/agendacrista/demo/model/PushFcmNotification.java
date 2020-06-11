@@ -2,19 +2,19 @@ package com.backend.agendacrista.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class PushFCMNotification {
+public class PushFcmNotification {
     private String title;
     private String body;
     @JsonProperty("click_action")
     private String clickAction;
 
 
-    public PushFCMNotification(String title, String body) {
+    public PushFcmNotification(String title, String body) {
         this.title = title;
         this.body = body;
     }
 
-    public PushFCMNotification(String title, String body, String clickAction) {
+    public PushFcmNotification(String title, String body, String clickAction) {
         this.title = title;
         this.body = body;
         this.clickAction = clickAction;

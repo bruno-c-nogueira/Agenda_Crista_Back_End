@@ -9,7 +9,7 @@ public class PushFcmRegistrationIds extends PushFcmAbstract {
     @JsonProperty("registration_ids")
     private List<String> registrationIds;
 
-    public PushFcmRegistrationIds(List<String> registrationIds, PushFCMNotification notification) {
+    public PushFcmRegistrationIds(List<String> registrationIds, PushFcmNotification notification) {
         super(notification);
         this.registrationIds = registrationIds;
     }

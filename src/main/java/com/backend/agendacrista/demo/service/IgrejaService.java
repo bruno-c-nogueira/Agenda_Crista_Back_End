@@ -79,7 +79,7 @@ public class IgrejaService {
     public void enviaMensagemStatus(Long idIgreja, StatusIgreja statusIgreja) {
         Igreja igreja = igrejaRepository.getOne(idIgreja);
         String body = statusIgreja == StatusIgreja.VERIFICADO ? "Ola, sua igreja foi verificada! Acesse o aplicativo e adicione novos eventos!" : "Algum dado que você enviou sobre a Igreja pode estar inconsistente com nossa plataforma. Dúvidas entre em contato pelo email.";
-        PushFcmAbstract pushFcmAbstract = new PushFcmTo(igreja.getUsuario().getTokenFcm(), new PushFCMNotification(igreja.getNome(), body));
+        PushFcmAbstract pushFcmAbstract = new PushFcmTo(igreja.getUsuario().getTokenFcm(), new PushFcmNotification(igreja.getNome(), body));
         pushNotificationFCMService.sendNotification(pushFcmAbstract);
     }
 

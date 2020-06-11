@@ -45,7 +45,7 @@ public class AutenticacaoController {
         return ResponseEntity.ok(new TokenDto(token, "Bearer", new UsuarioDto(userDetail)));
     }
 
-    @GetMapping("/confirm")
+    @PostMapping("/confirm")
     @Transactional
     public ResponseEntity<?> confirarEmail(@RequestParam(required = true) String token) {
         return registrarService.tokenConfirmacaoEValido(token) ? ResponseEntity.ok("<h1>Conta verificada com sucesso, faço o login no aplicativo</h1>") :

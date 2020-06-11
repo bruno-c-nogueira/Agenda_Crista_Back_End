@@ -47,7 +47,7 @@ public class RegistrarService {
 
     public void enviaEmailConfirmacao(UsernamePasswordAuthenticationToken dadosLogin, Usuario usuario, UriComponentsBuilder uriComponentsBuilder) {
         String token = tokenService.gerarTokenConfirmEmail(usuario);
-        String url = uriComponentsBuilder.path("/auth/confirm")
+        String url = uriComponentsBuilder.path("/confirm-email.html")
                 .queryParam("token={token}")
                 .buildAndExpand(token).toString();
         mailService.sendEmail(usuario, "Confime seu endereço de e-mail",
@@ -70,7 +70,7 @@ public class RegistrarService {
         if (usuario.isPresent()) {
             Usuario user = usuario.get();
             String token = tokenService.gerarTokenRecuperarSenha(user);
-            String url = uriComponentsBuilder.path("/auth/recover")
+            String url = uriComponentsBuilder.path("/recover.html")
                     .queryParam("token={token}")
                     .buildAndExpand(token).toString();
             mailService.sendEmail(user, "Link para alterar a senha",

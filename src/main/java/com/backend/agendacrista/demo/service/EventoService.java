@@ -45,7 +45,7 @@ public class EventoService {
         List<String> registrationIds = new ArrayList<>();
         List<Usuario> byIgrejasFavoritasContaining = usuarioRepository.findAllByIgrejasFavoritasContaining(igreja);
         byIgrejasFavoritasContaining.forEach(usuario -> registrationIds.add(usuario.getTokenFcm()));
-        PushFcmAbstract pushFcmAbstract = new PushFcmRegistrationIds(registrationIds, new PushFCMNotification(title, body));
+        PushFcmAbstract pushFcmAbstract = new PushFcmRegistrationIds(registrationIds, new PushFcmNotification(title, body));
         pushFcmAbstract.setData(new DetalharIgrejaDto(igreja));
         pnfcmService.sendNotification(pushFcmAbstract);
 
