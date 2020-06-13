@@ -1,8 +1,11 @@
 package com.backend.agendacrista.demo.model;
 
 import com.backend.agendacrista.demo.controller.form.RegisterForm;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -26,6 +29,7 @@ public class Usuario extends AbstractEntity implements UserDetails {
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private Set<Perfil> perfils = new HashSet<>();
 
+    @Fetch(FetchMode.SUBSELECT)
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private List<Igreja> igrejasFavoritas = new ArrayList<>();
 

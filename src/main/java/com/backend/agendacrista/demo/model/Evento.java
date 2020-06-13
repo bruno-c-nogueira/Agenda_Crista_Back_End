@@ -1,6 +1,8 @@
 package com.backend.agendacrista.demo.model;
 
 import com.backend.agendacrista.demo.controller.form.EventoForm;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -18,6 +20,7 @@ public class Evento extends AbstractEntity {
     private String nomeCelebrante;
     private LocalDate dataInicial;
     private LocalDate dataFinal;
+    @Fetch(FetchMode.SUBSELECT)
     @ManyToMany(cascade = {CascadeType.ALL})
     private List<Horarios> horarios;
     @ManyToOne

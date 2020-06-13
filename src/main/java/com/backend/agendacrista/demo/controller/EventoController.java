@@ -9,7 +9,6 @@ import com.backend.agendacrista.demo.repository.EventoRepository;
 import com.backend.agendacrista.demo.service.EventoService;
 import com.backend.agendacrista.demo.service.IgrejaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +48,7 @@ public class EventoController {
         return ResponseEntity.ok(DetalharEventoDto.converteEventoListParaDetalharEventoDto(listEvento));
     }
 
+    //Tem que ajustar
     @GetMapping("/ativo/igreja/{igrejaId}/dia-semana/{diaDaSemana}")
     public ResponseEntity<List<DetalharEventoDto>> listarEventoAtivoPorIgrejaEDiaDaSemana(@PathVariable Long igrejaId, @PathVariable DiaDaSemana diaDaSemana) {
         List<Evento> listEvento = eventoRepository.findByDataFinalGreaterThanEqualOrDataFinalNullAndIgrejaIdAndHorariosDiaDaSemana(LocalDate.now(), igrejaId, diaDaSemana);

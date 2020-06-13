@@ -33,7 +33,10 @@ public class IgrejaService {
     public void adicionaIgrejaFavoritaPorId(Long id) {
         Igreja igreja = igrejaRepository.getOne(id);
         verificaSeIgrejaNaoEhFavorito(igreja);
-        usuarioRepository.getOne(UsuarioService.getIdUsuarioLogado()).getIgrejasFavoritas().add(igreja);
+        Usuario usuario = usuarioRepository.getOne(UsuarioService.getIdUsuarioLogado());
+        List<Igreja> igrejasFavoritas = usuario.getIgrejasFavoritas();
+        igrejasFavoritas.add(igreja);
+        usuario.setIgrejasFavoritas(igrejasFavoritas);
     }
 
     public boolean verificaIgrejaEFavoritada(Long id) {
@@ -44,7 +47,10 @@ public class IgrejaService {
     public void removeIgrejaFavoritaPorId(Long id) {
         Igreja igreja = igrejaRepository.getOne(id);
         verificaSeIgrejaEhFavorito(igreja);
-        usuarioRepository.getOne(UsuarioService.getIdUsuarioLogado()).getIgrejasFavoritas().remove(igreja);
+        Usuario usuario = usuarioRepository.getOne(UsuarioService.getIdUsuarioLogado());
+        List<Igreja> igrejasFavoritas = usuario.getIgrejasFavoritas();
+        igrejasFavoritas.remove(igreja);
+        usuario.setIgrejasFavoritas(igrejasFavoritas);
     }
 
     public void verificaSeIdIgrejaExiste(Long id) {
