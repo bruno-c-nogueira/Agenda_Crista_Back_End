@@ -25,7 +25,7 @@ public class NoticiaService {
     public void enviaNotificacao(Noticia noticia) {
         String title = noticia.getTitulo();
         String body = noticia.getDescricao();
-        PushFcmAbstract pushFcmAbstract = new PushFcmTo(topicGlobal, new PushFcmNotification(title, body, "FLUTTER_NOTIFICATION_CLICK"));
+        PushFcmAbstract pushFcmAbstract = new PushFcmTo(topicGlobal, new PushFcmNotification(title, body));
         PushFcmData pushFcmData = new PushFcmData("FLUTTER_NOTIFICATION_CLICK", "noticia", noticia.getId());
         pushFcmAbstract.setData(pushFcmData);
         pnfcmService.sendNotification(pushFcmAbstract);

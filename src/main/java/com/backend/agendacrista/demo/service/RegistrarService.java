@@ -65,7 +65,7 @@ public class RegistrarService {
         return false;
     }
 
-    public void recuperarSenhaPorEmail(RecuperarSenhaEmailForm form, UriComponentsBuilder uriComponentsBuilder){
+    public void enviaEmailRecuperacaoDeSenha(RecuperarSenhaEmailForm form, UriComponentsBuilder uriComponentsBuilder){
         Optional<Usuario> usuario = usuarioRepository.findByEmail(form.getEmail());
         if (usuario.isPresent()) {
             Usuario user = usuario.get();

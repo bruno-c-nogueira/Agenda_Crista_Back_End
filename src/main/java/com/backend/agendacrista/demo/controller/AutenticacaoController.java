@@ -7,7 +7,6 @@ import com.backend.agendacrista.demo.controller.form.LoginForm;
 import com.backend.agendacrista.demo.controller.form.RecuperarSenhaEmailForm;
 import com.backend.agendacrista.demo.controller.form.RecuperarSenhaSenhaForm;
 import com.backend.agendacrista.demo.model.Usuario;
-import com.backend.agendacrista.demo.repository.UsuarioRepository;
 import com.backend.agendacrista.demo.service.RegistrarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,7 +61,7 @@ public class AutenticacaoController {
 
     @PostMapping("/resetPassword")
     public ResponseEntity<?> enviaSenhaRecuperacaoEmail(@RequestBody @Valid RecuperarSenhaEmailForm form, UriComponentsBuilder uriComponentsBuilder) {
-        registrarService.recuperarSenhaPorEmail(form, uriComponentsBuilder);
+        registrarService.enviaEmailRecuperacaoDeSenha(form, uriComponentsBuilder);
         return ResponseEntity.ok().build();
     }
 }
