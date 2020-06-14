@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Agenda Cristã</title>
+    <base href="/"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="icon" type="image/x-icon" href="/auth/img/favicon.ico"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        *, ::before, ::after {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            background: #FFF;
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+        }
+
+        header {
+            background-image: linear-gradient(to right, #193440, #110101);
+            height: 370px;
+            color: #FFF;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        section {
+            font-size: 1.2rem;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        footer {
+            bottom: 10px;
+            position: absolute;
+            color: #000;
+            font-size: 0.8rem;
+            text-align: center;
+            width: 100%;
+        }
+
+        .logo-wrapper {
+            padding: 4rem;
+        }
+
+        .logo {
+            max-width: 150px;
+            max-height: 150px;
+        }
+
+        .container {
+            max-width: 800px;
+        }
+
+        .contact {
+            background: #F2F2F2;
+            font-size: 1rem;
+        }
+
+        .input-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .password-box input {
+            width: 290px;
+            margin-bottom: 1.5rem;
+            padding: 1em 2em 1em 1em;
+            font-size: .8em;
+            padding-right: 3em;
+            background: #F4F8F9;
+            border: none;
+            outline: none;
+        }
+
+        .password-box input::placeholder {
+            opacity: .6;
+        }
+
+        .password-box {
+            display: flex;
+        }
+
+        .hide-show {
+            margin-left: -2.5em;
+            margin-top: .45em;
+            opacity: 0.5;
+        }
+
+        .hide-show span {
+            padding: .2em .7em;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            user-select: none;
+        }
+
+        button {
+            width: 300px;
+            border: 2px solid #110101;
+            background: none;
+            padding: 1em 0;
+            color: #110101;
+            cursor: pointer;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 2rem;
+        }
+
+        button:hover,
+        button:focus {
+            background: #193440;
+            color: #FFF;
+        }
+
+        .error {
+            color: #C00;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo-wrapper">
+        <img class="logo"
+             src="https://firebasestorage.googleapis.com/v0/b/agenda-crista.appspot.com/o/god.png?alt=media&token=d086d02c-b7b0-47a6-b344-f5de27b4054b"
+             alt="Agenda Cristã"/>
+    </div>
+    <h3>
+        Agenda Cristã
+    </h3>
+</header>
+<section>
+    <p id="change_msg">
+    <div class="success" >
+        Olá <span th:text="${nome}"></span>, <br/>
+        Se você solicitou criar uma conta no aplicativo Agenda Cristã, clique no botão abaixo para confirma sua conta.
+    </div>
+    </p>
+</section>
+<section>
+    <button id="submitReset"><a th:href="${link}">Confirma Conta</a></button>
+</section>
+</body>
+<footer>
+    <p>&copy; Copyright Agenda Cristã 2020 - Entre em contato pelo email: <a href="mailto:agendacristaservice@gmail.com">agendacristaservice@gmail.com</a></p>
+</footer>
+<br>
+</html>

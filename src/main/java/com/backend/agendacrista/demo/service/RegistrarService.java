@@ -50,9 +50,8 @@ public class RegistrarService {
         String url = uriComponentsBuilder.path("/confirm-email.html")
                 .queryParam("token={token}")
                 .buildAndExpand(token).toString();
-        mailService.sendEmail(usuario, "Confime seu endereço de e-mail",
-                "Para utilizar o aplicativo Agenda Cristã, " +
-                        "confirme seu endereço de e-mail com o link abaixo:\n" + url);
+
+        mailService.sendMailTemplate(usuario, "Confime seu endereço de e-mail", url, "confirmEmailTemplate");
     }
 
     public boolean tokenConfirmacaoEValido(String token) {
@@ -73,9 +72,7 @@ public class RegistrarService {
             String url = uriComponentsBuilder.path("/recover.html")
                     .queryParam("token={token}")
                     .buildAndExpand(token).toString();
-            mailService.sendEmail(user, "Link para alterar a senha",
-                    "Olá " + user.getNome()  + "\n" +
-                            "Aparentemente, você pediu para alterar sua senha. Para fazer isso basta seguir o link::\n" + url);
+            mailService.sendMailTemplate(user, "Link para alterar a senha", url, "revoverEmailTemplate");
 
         }
 

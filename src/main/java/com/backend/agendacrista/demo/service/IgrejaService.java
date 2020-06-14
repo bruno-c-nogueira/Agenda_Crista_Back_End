@@ -79,6 +79,7 @@ public class IgrejaService {
         Igreja igreja = igrejaRepository.getOne(idIgreja);
         String body = statusIgreja == StatusIgreja.VERIFICADO ? "Ola, sua igreja foi verificada! Acesse o aplicativo e adicione novos eventos!" : "Algum dado que você enviou sobre a Igreja pode estar inconsistente com nossa plataforma. Dúvidas entre em contato pelo email.";
         PushFcmAbstract pushFcmAbstract = new PushFcmTo(igreja.getUsuario().getTokenFcm(), new PushFcmNotification(igreja.getNome(), body));
+        pushFcmAbstract.setData(new PushFcmData("FLUTTER_NOTIFICATION_CLICK", "igreja_aprovada", igreja.getId()));
         pushNotificationFCMService.sendNotification(pushFcmAbstract);
     }
 

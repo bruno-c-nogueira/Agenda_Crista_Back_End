@@ -46,7 +46,7 @@ public class EventoService {
         List<Usuario> byIgrejasFavoritasContaining = usuarioRepository.findAllByIgrejasFavoritasContaining(igreja);
         byIgrejasFavoritasContaining.forEach(usuario -> registrationIds.add(usuario.getTokenFcm()));
         PushFcmAbstract pushFcmAbstract = new PushFcmRegistrationIds(registrationIds, new PushFcmNotification(title, body));
-        pushFcmAbstract.setData(new DetalharIgrejaDto(igreja));
+        pushFcmAbstract.setData(new PushFcmData("FLUTTER_NOTIFICATION_CLICK", "igreja_evento", igreja.getId()));
         pnfcmService.sendNotification(pushFcmAbstract);
 
     }
