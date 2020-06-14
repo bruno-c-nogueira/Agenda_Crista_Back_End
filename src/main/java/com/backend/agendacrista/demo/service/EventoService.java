@@ -50,4 +50,8 @@ public class EventoService {
         pnfcmService.sendNotification(pushFcmAbstract);
 
     }
+
+    public void deletarEventoPorIdIgreja(Long id) {
+        eventoRepository.deleteByIgrejaId(id);
+    }
 }

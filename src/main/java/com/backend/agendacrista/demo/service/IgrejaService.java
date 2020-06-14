@@ -21,36 +21,32 @@ public class IgrejaService {
     CidadeRepository cidadeRepository;
 
     @Autowired
-    UsuarioRepository usuarioRepository;
+    UsuarioService usuarioService;
+
+    @Autowired
+    EventoService eventoService;
 
     @Autowired
     PushNotificationFCMService pushNotificationFCMService;
 
     public List<Igreja> igrejasFavoritasPorUsuarioLogado() {
-        return usuarioRepository.getOne(UsuarioService.getIdUsuarioLogado()).getIgrejasFavoritas();
+        return usuarioService.listaIgrejasFavoritasPorUsuarioLogado();
     }
 
     public void adicionaIgrejaFavoritaPorId(Long id) {
         Igreja igreja = igrejaRepository.getOne(id);
         verificaSeIgrejaNaoEhFavorito(igreja);
-        Usuario usuario = usuarioRepository.getOne(UsuarioService.getIdUsuarioLogado());
-        List<Igreja> igrejasFavoritas = usuario.getIgrejasFavoritas();
-        igrejasFavoritas.add(igreja);
-        usuario.setIgrejasFavoritas(igrejasFavoritas);
+        usuarioService.listaIgrejasFavoritasPorUsuarioLogado().add(igreja);
     }
 
     public boolean verificaIgrejaEFavoritada(Long id) {
-        List<Igreja> igrejasFavoritas = usuarioRepository.getOne(UsuarioService.getIdUsuarioLogado()).getIgrejasFavoritas();
-        return igrejasFavoritas.contains(new Igreja(id));
+        return usuarioService.listaIgrejasFavoritasPorUsuarioLogado().contains(new Igreja(id));
     }
 
     public void removeIgrejaFavoritaPorId(Long id) {
         Igreja igreja = igrejaRepository.getOne(id);
         verificaSeIgrejaEhFavorito(igreja);
-        Usuario usuario = usuarioRepository.getOne(UsuarioService.getIdUsuarioLogado());
-        List<Igreja> igrejasFavoritas = usuario.getIgrejasFavoritas();
-        igrejasFavoritas.remove(igreja);
-        usuario.setIgrejasFavoritas(igrejasFavoritas);
+        usuarioService.listaIgrejasFavoritasPorUsuarioLogado().remove(igreja);
     }
 
     public void verificaSeIdIgrejaExiste(Long id) {
@@ -59,14 +55,12 @@ public class IgrejaService {
     }
 
     private void verificaSeIgrejaNaoEhFavorito(Igreja igreja) {
-        Usuario usuario = usuarioRepository.getOne(UsuarioService.getIdUsuarioLogado());
-        if (usuario.getIgrejasFavoritas().contains(igreja))
+        if (usuarioService.listaIgrejasFavoritasPorUsuarioLogado().contains(igreja))
             throw new UnsupportedOperationException("Igreja ja é favorita");
     }
 
     private void verificaSeIgrejaEhFavorito(Igreja igreja) {
-        Usuario usuario = usuarioRepository.getOne(UsuarioService.getIdUsuarioLogado());
-        if (!usuario.getIgrejasFavoritas().contains(igreja))
+        if (!usuarioService.listaIgrejasFavoritasPorUsuarioLogado().contains(igreja))
             throw new UnsupportedOperationException("Igreja não é favorita");
     }
 
@@ -106,7 +100,8 @@ public class IgrejaService {
 
     public void deletaIgreja(Long id) {
         Igreja igreja = igrejaRepository.getOne(id);
-        usuarioRepository.findAllByIgrejasFavoritasContaining(igreja).forEach(usuario -> usuario.getIgrejasFavoritas().remove(igreja));
+        usuarioService.deletaIgrejaFavoritaDosUsuarios(igreja);
+        eventoService.deletarEventoPorIdIgreja(id);
         igrejaRepository.deleteById(id);
     }
 }
