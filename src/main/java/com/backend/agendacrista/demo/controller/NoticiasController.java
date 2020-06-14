@@ -18,7 +18,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/noticias")
@@ -42,7 +41,7 @@ public class NoticiasController {
         return ResponseEntity.ok(new NoticiaDto(noticiaRepository.getOne(id)));
     }
 
-    @PostMapping
+    @PostMapping("/admin/")
     public ResponseEntity<NoticiaDto> cadastrar(@RequestBody @Valid NoticiaForm noticiaForm, UriComponentsBuilder uriComponentsBuilder) {
         Noticia noticia = noticiaForm.converteNoticiaFormParaNoticia();
         noticiaRepository.save(noticia);
@@ -51,7 +50,7 @@ public class NoticiasController {
         return ResponseEntity.created(uri).body(new NoticiaDto(noticia));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/{id}")
     @Transactional
     public ResponseEntity<?> remover(@PathVariable Long id) {
         noticiaService.verificaSeIdNoticiaExiste(id);
@@ -59,7 +58,7 @@ public class NoticiasController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/admin/{id}")
     @Transactional
     public ResponseEntity<NoticiaDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoNoticiaForm form) {
         noticiaService.verificaSeIdNoticiaExiste(id);

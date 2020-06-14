@@ -14,12 +14,12 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/datas/especias")
+@RequestMapping(value = "/datas-especias")
 public class DataEspeciasController {
     @Autowired
     DataEspeciaisRepository dataEspeciaisRepository;
 
-    @PostMapping
+    @PostMapping("/admin/")
     ResponseEntity<DataEspecialDto> cadastraDatas(@RequestBody @Validated DataEspecialForm dataEspecialDto, UriComponentsBuilder uriComponentsBuilder){
         DataEspecial dataEspecial = dataEspecialDto.converteDataEspecialFormParaDataEspecial();
         dataEspeciaisRepository.save(dataEspecial);
