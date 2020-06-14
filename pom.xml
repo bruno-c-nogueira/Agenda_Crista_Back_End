@@ -85,6 +85,11 @@
             <artifactId>asm</artifactId>
             <version>6.2</version> <!-- Use newer version of ASM -->
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.8</version>
+        </dependency>
     </dependencies>
 
     <build>
