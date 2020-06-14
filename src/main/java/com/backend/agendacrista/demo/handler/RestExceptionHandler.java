@@ -39,7 +39,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<?> handleBadCredentialsException(BadCredentialsException bcExeption) {
+    public ResponseEntity<?> handleBadCredentialsException(AuthenticationException bcExeption) {
         ErrorDetails bcDetails = ErrorDetails.Builder.newBuilder()
                 .timestamp(new Date().getTime())
                 .status(HttpStatus.BAD_REQUEST.value())

@@ -59,6 +59,6 @@ public class DataEspecialForm {
     }
 
     public DataEspecial converteDataEspecialFormParaDataEspecial(){
-        return new DataEspecial(dataEspecial,descricaoData,imagemData);
+        return new DataEspecial(dataEspecial,descricaoData,imagemData,tituloData);
     }
 }

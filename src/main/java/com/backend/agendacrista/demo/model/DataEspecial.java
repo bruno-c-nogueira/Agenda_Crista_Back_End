@@ -14,11 +14,12 @@ public class DataEspecial extends AbstractEntity {
     private String tituloData;
     private String imagemData;
 
-    public DataEspecial(LocalDateTime dataEspecial, String descricaoData, String imagemData) {
+    public DataEspecial(LocalDateTime dataEspecial, String descricaoData, String imagemData,String tituloData) {
         super();
         this.dataEspecial = dataEspecial;
         this.descricaoData = descricaoData;
         this.imagemData = imagemData;
+        this.tituloData = tituloData;
     }
 
     public DataEspecial() {

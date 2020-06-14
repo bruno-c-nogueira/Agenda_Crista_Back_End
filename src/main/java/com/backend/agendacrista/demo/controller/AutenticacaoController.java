@@ -6,6 +6,7 @@ import com.backend.agendacrista.demo.controller.dto.UsuarioDto;
 import com.backend.agendacrista.demo.controller.form.LoginForm;
 import com.backend.agendacrista.demo.controller.form.RecuperarSenhaEmailForm;
 import com.backend.agendacrista.demo.controller.form.RecuperarSenhaSenhaForm;
+import com.backend.agendacrista.demo.handler.RestExceptionHandler;
 import com.backend.agendacrista.demo.model.Usuario;
 import com.backend.agendacrista.demo.service.RegistrarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -35,13 +37,18 @@ public class AutenticacaoController {
 
     @Transactional
     @PostMapping
-    public ResponseEntity<Object> autenticar(@RequestBody @Valid LoginForm form) {
+    public ResponseEntity<?> autenticar(@RequestBody @Valid LoginForm form) {
         UsernamePasswordAuthenticationToken dadosLogin = form.converter();
-        Authentication authentication = authManager.authenticate(dadosLogin);
-        String token = tokenService.gerarTokenLogin(authentication);
-        Usuario userDetail = (Usuario) authentication.getPrincipal();
-        userDetail.setTokenFcm(form.getTokenFcm());
-        return ResponseEntity.ok(new TokenDto(token, "Bearer", new UsuarioDto(userDetail)));
+        try {
+            Authentication authentication = authManager.authenticate(dadosLogin);
+            String token = tokenService.gerarTokenLogin(authentication);
+            Usuario userDetail = (Usuario) authentication.getPrincipal();
+            userDetail.setTokenFcm(form.getTokenFcm());
+            return ResponseEntity.ok(new TokenDto(token, "Bearer", new UsuarioDto(userDetail)));
+        }catch (AuthenticationException e){
+            return new RestExceptionHandler().handleBadCredentialsException(e);
+        }
+
     }
 
     @PostMapping("/confirm")
