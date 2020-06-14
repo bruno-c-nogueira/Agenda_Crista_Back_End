@@ -3,6 +3,7 @@ package com.backend.agendacrista.demo.model;
 import com.backend.agendacrista.demo.controller.form.IgrejaForm;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Igreja extends AbstractEntity {
@@ -17,6 +18,7 @@ public class Igreja extends AbstractEntity {
     @Enumerated(value = EnumType.STRING)
     private StatusIgreja statusIgreja = StatusIgreja.EM_ANALISE;
     private String doc_imagem_url;
+    private LocalDateTime criadoEm = LocalDateTime.now();
 
 
     public Igreja() {
@@ -99,5 +101,13 @@ public class Igreja extends AbstractEntity {
 
     public void setDoc_imagem_url(String doc_imagem_url) {
         this.doc_imagem_url = doc_imagem_url;
+    }
+
+    public LocalDateTime getCriadoEm() {
+        return criadoEm;
+    }
+
+    public void setCriadoEm(LocalDateTime criadoEm) {
+        this.criadoEm = criadoEm;
     }
 }

@@ -6,7 +6,6 @@ import com.backend.agendacrista.demo.error.UserPricipalNotAutorizedException;
 import com.backend.agendacrista.demo.model.*;
 import com.backend.agendacrista.demo.repository.CidadeRepository;
 import com.backend.agendacrista.demo.repository.IgrejaRepository;
-import com.backend.agendacrista.demo.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

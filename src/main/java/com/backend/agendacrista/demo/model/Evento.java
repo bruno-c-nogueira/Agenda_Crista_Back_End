@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -25,6 +26,7 @@ public class Evento extends AbstractEntity {
     private List<Horarios> horarios;
     @ManyToOne
     private Usuario usuario;
+    private LocalDateTime criadoEm = LocalDateTime.now();
 
 
     public Evento(EventoForm form, Igreja igreja, Usuario usuario, List<Horarios> horarios) {
@@ -104,5 +106,13 @@ public class Evento extends AbstractEntity {
 
     public void setHorarios(List<Horarios> horarios) {
         this.horarios = horarios;
+    }
+
+    public LocalDateTime getCriadoEm() {
+        return criadoEm;
+    }
+
+    public void setCriadoEm(LocalDateTime criadoEm) {
+        this.criadoEm = criadoEm;
     }
 }
