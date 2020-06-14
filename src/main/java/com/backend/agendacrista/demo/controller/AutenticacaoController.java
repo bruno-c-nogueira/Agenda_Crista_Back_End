@@ -43,9 +43,13 @@ public class AutenticacaoController {
             Authentication authentication = authManager.authenticate(dadosLogin);
             String token = tokenService.gerarTokenLogin(authentication);
             Usuario userDetail = (Usuario) authentication.getPrincipal();
-            userDetail.setTokenFcm(form.getTokenFcm());
+            String tokenFcm = form.getTokenFcm();
+            if (tokenFcm != null) {
+                userDetail.setTokenFcm(form.getTokenFcm());
+            }
             return ResponseEntity.ok(new TokenDto(token, "Bearer", new UsuarioDto(userDetail)));
         }catch (AuthenticationException e){
+
             return new RestExceptionHandler().handleBadCredentialsException(e);
         }
 
