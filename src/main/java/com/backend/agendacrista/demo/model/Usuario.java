@@ -19,7 +19,7 @@ public class Usuario extends AbstractEntity implements UserDetails {
     @Column(unique = true)
     private String email;
     private String senha;
-    private boolean ativo = true;
+    private boolean ativo = false;
     private LocalDateTime criadoEm = LocalDateTime.now();
     private LocalDateTime verificadoEm;
     private String tokenFcm;
