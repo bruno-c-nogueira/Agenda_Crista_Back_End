@@ -3,14 +3,9 @@
 <head>
     <meta charset="utf-8"/>
     <title>Agenda Cristã</title>
-    <base href="/"/>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <link rel="icon" type="image/x-icon" href="/auth/img/favicon.ico"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <style>
         *, ::before, ::after {
             -moz-box-sizing: border-box;
@@ -46,18 +41,6 @@
             text-align: center;
         }
 
-        button {
-
-        }
-
-        footer {
-            bottom: 10px;
-            position: absolute;
-            color: #000;
-            font-size: 0.8rem;
-            text-align: center;
-            width: 100%;
-        }
 
         .logo-wrapper {
             padding: 4rem;
@@ -66,54 +49,6 @@
         .logo {
             max-width: 150px;
             max-height: 150px;
-        }
-
-        .container {
-            max-width: 800px;
-        }
-
-        .contact {
-            background: #F2F2F2;
-            font-size: 1rem;
-        }
-
-        .input-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .password-box input {
-            width: 290px;
-            margin-bottom: 1.5rem;
-            padding: 1em 2em 1em 1em;
-            font-size: .8em;
-            padding-right: 3em;
-            background: #F4F8F9;
-            border: none;
-            outline: none;
-        }
-
-        .password-box input::placeholder {
-            opacity: .6;
-        }
-
-        .password-box {
-            display: flex;
-        }
-
-        .hide-show {
-            margin-left: -2.5em;
-            margin-top: .45em;
-            opacity: 0.5;
-        }
-
-        .hide-show span {
-            padding: .2em .7em;
-            border-radius: 5px;
-            cursor: pointer;
-            display: flex;
-            user-select: none;
         }
 
         button {
@@ -125,8 +60,6 @@
             cursor: pointer;
             border-radius: 20px;
             font-weight: bold;
-            margin-top: 2rem;
-            text-align: center;
         }
 
         button:hover,
@@ -152,21 +85,34 @@
         Agenda Cristã
     </h3>
 </header>
-<section>
-    <p id="change_msg">
-    <div class="success" >
-    Olá <span th:text="${nome}"></span>, <br/>
-    Se você solicitou a recuperção de senha no aplicativo Agenda Cristã, clique no botão abaixo para redefinir sua senha.
-    </div>
-    </p>
-</section>
-<section>
-    <button><a th:href="${link}">Redefinir Senha</a></button>
-</section>
-</body>
 
-<footer>
-    <p>&copy; Copyright Agenda Cristã 2020 - Entre em contato pelo email: <a href="mailto:agendacristaservice@gmail.com">agendacristaservice@gmail.com</a></p>
-</footer>
-<br>
+<table cellspacing="0" cellpadding="10" border="0" align="center">
+    <tr align="center">
+        <td>
+            <p id="change_msg">
+            <div class="success" >
+                Olá <span th:text="${nome}"></span>, <br/>
+                Se você solicitou a recuperção de senha no aplicativo Agenda Cristã, clique no botão abaixo para redefinir sua senha.
+            </div>
+            </p>
+        </td>
+    </tr>
+    <tr align="center">
+        <td>
+            <button id="submitReset"><a th:href="${link}">Redefinir Senha</a></button>
+        </td>
+    </tr>
+    <tr align="center">
+        <td>
+            <p>Caso o botão não funcione use o link: <a th:href="${link}" th:text="${link}"></a></p>
+        </td>
+    </tr>
+    <tr align="center">
+        <td>
+            <p>&copy; Copyright Agenda Cristã 2020 - Entre em contato pelo email: <a href="mailto:agendacristaservice@gmail.com">agendacristaservice@gmail.com</a></p>
+        </td>
+    </tr>
+</table>
+<br/>
+</body>
 </html>
